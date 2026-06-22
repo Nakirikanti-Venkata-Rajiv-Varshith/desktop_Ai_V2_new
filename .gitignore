@@ -1,0 +1,41 @@
+# ==========================================
+# Environments & Virtual Envs
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+Active/
+
+# ==========================================
+# Logging & Runtime Tracks
+# ==========================================
+logs/
+*.log
+data/yt_transcript.txt
+
+# ==========================================
+# Python Bytecode & Cache Compilation
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# ==========================================
+# OS & System Specific Garbage Files
+# ==========================================
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# ==========================================
+# IDEs & Editor Configurations (Optional)
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
