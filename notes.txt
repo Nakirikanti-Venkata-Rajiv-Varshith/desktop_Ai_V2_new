@@ -1,0 +1,5 @@
+1. Move files
+
+
+ find ./desktop_Ai_V2_new -type f \( -name "*.py" -o -name "*.txt" -o -name "*.json" \) ! -name "__init__.py" -exec cp {} ./files/ \;
+
