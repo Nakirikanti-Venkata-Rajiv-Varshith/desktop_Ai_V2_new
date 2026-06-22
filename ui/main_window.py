@@ -40,9 +40,26 @@ class AgentWorker(QThread):
                 self.status_signal.emit(f"Processing execution step {idx}/{len(commands)}: <b>'{command}'</b>")
                 
                 # Feed command step into the current routing/planning loop
-                results = orchestrator.run(command)
+                # results = orchestrator.run(command)
                 
-                self.status_signal.emit(f"<b>AI Agent:</b> Successfully ran step. Result: {str(results)}")
+                # self.status_signal.emit(f"<b>AI Agent:</b> Successfully ran step. Result: {str(results)}")
+
+                results = orchestrator.run(command)
+
+                if (
+                    isinstance(results, list)
+                    and len(results) > 0
+                    and isinstance(results[0], dict)
+                    and "summary" in results[0]
+                ):
+                    self.status_signal.emit(
+                        f"<b>AI Agent:</b>\n{results[0]['summary']}"
+                    )
+                else:
+                    self.status_signal.emit(
+                        f"<b>AI Agent:</b> Successfully ran step. Result: {str(results)}"
+                    )
+
 
             self.finished_signal.emit(overall_success)
         except Exception as e:
@@ -120,7 +137,39 @@ class MainWindow(QMainWindow):
         if "<b>AI Agent:</b>" in status or len(status) > 150:
             header = "<b><font color='#b388ff'>[System] AI Agent:</font></b><br>"
             body = status.replace("<b>AI Agent:</b>", "").strip()
-            formatted_body = body.replace("\n", "<br>")
+            if "MAIL 1" in body:
+
+                formatted_body = (
+                    body
+                    .replace("\n", "<br>")
+                    .replace(
+                        "MAIL ",
+                        "<br><br><b>MAIL "
+                    )
+                    .replace(
+                        "Subject:",
+                        "</b><br><b>Subject:</b>"
+                    )
+                    .replace(
+                        "Summary:",
+                        "<br><b>Summary:</b>"
+                    )
+                    .replace(
+                        "Date & Time Received:",
+                        "<br><b>Date & Time Received:</b>"
+                    )
+                    .replace(
+                        "HIGH PRIORITY EMAILS",
+                        "<br><br><hr><b>HIGH PRIORITY EMAILS</b>"
+                    )
+                )
+
+            else:
+
+                formatted_body = body.replace(
+                    "\n",
+                    "<br>"
+                )
             self.chat_display.append(f"{header}<font color='#f8f8f2'>{formatted_body}</font><br>")
         else:
             self.chat_display.append(f"<font color='#b388ff'>[System]</font> <font color='#a1a1b3'>{status}</font>")
