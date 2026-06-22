@@ -2,7 +2,8 @@
 import requests
 import json
 from config.settings import OLLAMA_URL, OLLAMA_MODEL
-from utils.logger import agent_logger
+from config.settings import OLLAMA_URL, OLLAMA_MODEL
+from tools.logger import agent_logger
 from llm.prompts.router_prompt import ROUTER_PROMPT
 
 class OllamaClient:
@@ -22,7 +23,7 @@ class OllamaClient:
         }
         try:
             agent_logger.info(f"Routing query to Ollama ({self.model})...")
-            response = requests.post(self.url, json=payload, timeout=30)
+            response = requests.post(self.url, json=payload, timeout=60)
             response.raise_for_status()
             
             tool_name = response.json().get("response", "").strip().lower()
@@ -51,7 +52,11 @@ class OllamaClient:
             response.raise_for_status()
             
             raw_response = response.json().get("response", "").strip()
-
+            print("\n" + "="*80)
+            print("RAW OLLAMA RESPONSE")
+            print("="*80)
+            print(raw_response)
+            print("="*80 + "\n")
             # --- CRITICAL SAFETY FALLBACK ---
             if not raw_response:
                 agent_logger.warning("Empty response received from LLM. Injecting automated system fallback.")

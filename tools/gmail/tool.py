@@ -71,7 +71,7 @@ class GmailTool:
     @staticmethod
     def open():
         """Fast-path command specifically just to open the UI."""
-        from tools.browser_tools.browser_tool import BrowserTool
+        from tools.browser.tool import BrowserTool
         BrowserTool.open_url("https://mail.google.com")
         return "Gmail Opened"
 
@@ -87,7 +87,7 @@ class GmailTool:
         # CRITICAL FIX: Ensure Gmail is actually open and loaded!
         # =========================================================
         if not self._connect_to_tab(mail_only=True):
-            from tools.browser_tools.browser_tool import BrowserTool
+            from tools.browser.tool import BrowserTool
             # Force the browser to open Gmail using PyAutoGUI shortcut
             BrowserTool.open_url("https://mail.google.com")
             

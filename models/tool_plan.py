@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
 
-
 class ToolPlan(BaseModel):
     tool: str
     function: str

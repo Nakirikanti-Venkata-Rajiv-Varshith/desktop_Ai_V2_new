@@ -1,5 +1,278 @@
-1. Move files
+## 1. Prerequisites (System Packages)
+Ubuntu requires explicit installation of core Python utilities and native GUI rendering libraries before installing the project packages. Run the following command block:
+
+sudo apt update && sudo apt install -y python3-pip python3-venv libxcb-cursor0
 
 
- find ./desktop_Ai_V2_new -type f \( -name "*.py" -o -name "*.txt" -o -name "*.json" \) ! -name "__init__.py" -exec cp {} ./files/ \;
 
+2. Local LLM Setup (Ollama Engine)
+
+curl -fsSL [https://ollama.com/install.sh](https://ollama.com/install.sh) | sh
+
+
+
+3. Pull the Qwen3 8B Model:
+
+ollama pull qwen3:8b
+
+
+
+4. Python Virtual Environment (venv) Activation:
+
+cd Desktop_Agent_V1
+python3 -m venv .venv
+source .venv/bin/activate
+
+
+
+5. Install Project Requirements:
+
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
+
+6. Launching the Agent:
+
+python app.py
+
+
+
+7. Have to install wcrtl
+
+sudo apt install wmctrl
+
+
+
+8. Copy all files into the files directory in before level
+
+find . -type f ! -path '*/.*' ! -path '*/__pycache__/*' \( -name "*.py" -o -name "*.txt" -o -name "*.json" \) ! -name "__init__.py" -exec cp --update=none {} ../files/ \;
+
+
+
+9. Code to open agent chromium for manual tests:
+
+chromium --remote-debugging-port=9222 --remote-allow-origins=*
+
+
+
+
+Structure:-
+
+Desktop_Agent_V2/
+
+
+
+│
+
+├── app.py
+
+│
+
+├── config/
+
+│   ├── settings.py
+
+│   ├── constants.py
+
+│   └── paths.py
+
+│
+
+├── ui/
+
+│   ├── main_window.py
+
+│   ├── prompt_bar.py
+
+│   ├── styles.py
+
+│   └── worker.py
+
+│
+
+├── agent/
+
+│   │
+
+│   ├── orchestrator.py
+
+│   ├── planner.py
+
+│   ├── executor.py
+
+│   ├── router.py
+
+│   ├── parser.py
+
+│   └── memory.py
+
+│
+
+├── llm/
+
+│   │
+
+│   ├── ollama_client.py
+
+│   │
+
+│   ├── prompts/
+
+│   │   ├── base_prompt.py
+
+│   │   ├── router_prompt.py
+
+│   │   ├── system_prompt.py
+
+│   │   ├── gmail_prompt.py
+
+│   │   ├── youtube_prompt.py
+
+│   │   ├── browser_prompt.py
+
+│   │   └── file_prompt.py
+
+│   │
+
+│   └── builders/
+
+│       └── prompt_builder.py
+
+│
+
+├── tools/
+
+│   │
+
+│   ├── registry.py
+
+│   │
+
+│   ├── system/
+
+│   │   ├── tool.py
+
+│   │   └── prompt.py
+
+│   │
+
+│   ├── gmail/
+
+│   │   ├── tool.py
+
+│   │   └── prompt.py
+
+│   │
+
+│   ├── youtube/
+
+│   │   ├── tool.py
+
+│   │   └── prompt.py
+
+│   │
+
+│   ├── browser/
+
+│   │   ├── tool.py
+
+│   │   └── prompt.py
+
+│   │
+
+│   ├── file/
+
+│   │   ├── tool.py
+
+│   │   └── prompt.py
+
+│   │
+
+│   ├── gui/
+
+│   │   ├── tool.py
+
+│   │   └── prompt.py
+
+│   │
+
+│   └── app/
+
+│       ├── tool.py
+
+│       └── prompt.py
+
+│
+
+├── browser/
+
+│   │
+
+│   ├── cdp_client.py
+
+│   ├── chromium.py
+
+│   ├── focus.py
+
+│   └── bootstrap.py
+
+│
+
+├── models/
+
+│   │
+
+│   ├── tool_plan.py
+
+│   ├── task_plan.py
+
+│   ├── tool_response.py
+
+│   └── schemas.py
+
+│
+
+├── data/
+
+│   ├── commands.json
+
+│   ├── websites.json
+
+│   └── cache/
+
+│
+
+├── logs/
+
+│
+
+├── utils/
+
+│   ├── logger.py
+
+│   ├── helpers.py
+
+│   └── file_utils.py
+
+│
+
+└── tests/
+
+    ├── test_youtube.py
+
+    ├── test_gmail.py
+
+    ├── test_browser.py
+
+    └── test_system.py
+
+└── no_llm_needed/
+
+    ├── command_matcher.py
+
+    ├── predefined_commands.py
+
+    ├── test_browser.py
+
+    └── test_system.py

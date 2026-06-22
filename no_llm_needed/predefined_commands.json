@@ -1,0 +1,226 @@
+{
+  "open chrome": {
+    "tool": "app",
+    "function": "open",
+    "arguments": {
+      "app": "chrome"
+    }
+  },
+
+  "open chromium": {
+    "tool": "app",
+    "function": "open",
+    "arguments": {
+      "app": "chromium"
+    }
+  },
+
+  "open firefox": {
+    "tool": "app",
+    "function": "open",
+    "arguments": {
+      "app": "firefox"
+    }
+  },
+
+  "open terminal": {
+    "tool": "app",
+    "function": "open",
+    "arguments": {
+      "app": "terminal"
+    }
+  },
+
+  "open vscode": {
+    "tool": "app",
+    "function": "open",
+    "arguments": {
+      "app": "vscode"
+    }
+  },
+
+  "open youtube": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://youtube.com"
+    }
+  },
+
+  "open gmail": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://mail.google.com"
+    }
+  },
+
+  "open github": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://github.com"
+    }
+  },
+
+  "open chatgpt": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://chatgpt.com"
+    }
+  },
+
+  "open google": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://google.com"
+    }
+  },
+
+  "open linkedin": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://linkedin.com"
+    }
+  },
+
+  "open reddit": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://reddit.com"
+    }
+  },
+
+  "open x": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://x.com"
+    }
+  },
+
+  "open twitter": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://x.com"
+    }
+  },
+
+  "open instagram": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://instagram.com"
+    }
+  },
+
+  "open facebook": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://facebook.com"
+    }
+  },
+
+  "open amazon": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://amazon.in"
+    }
+  },
+
+  "open netflix": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://netflix.com"
+    }
+  },
+
+  "open spotify": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://spotify.com"
+    }
+  },
+
+  "open stackoverflow": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://stackoverflow.com"
+    }
+  },
+
+  "open whatsapp": {
+    "tool": "browser",
+    "function": "open_url",
+    "arguments": {
+      "url": "https://web.whatsapp.com"
+    }
+  },
+
+  "new tab": {
+  "tool":"browser",
+  "function":"open_new_tab",
+  "arguments":{}
+  },
+
+  "open new tab": {
+    "tool":"browser",
+    "function":"open_new_tab",
+    "arguments":{}
+  },
+
+  "close tab": {
+    "tool":"browser",
+    "function":"close_tab",
+    "arguments":{}
+  },
+
+  "refresh page": {
+    "tool":"browser",
+    "function":"refresh",
+    "arguments":{}
+  },
+
+  "go back": {
+    "tool":"browser",
+    "function":"go_back",
+    "arguments":{}
+  },
+
+  "go forward": {
+    "tool":"browser",
+    "function":"go_forward",
+    "arguments":{}
+  },
+  
+    "what time is it": {
+      "tool":"system",
+      "function":"current_time",
+      "arguments":{}
+    },
+
+    "what time is it now": {
+      "tool":"system",
+      "function":"current_time",
+      "arguments":{}
+    },
+
+    "current time": {
+      "tool":"system",
+      "function":"current_time",
+      "arguments":{}
+    }
+  
+
+
+}
