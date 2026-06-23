@@ -8,3 +8,5 @@ pyautogui
 websocket-client
 youtube-transcript-api
 playwright
+instructor
+openai

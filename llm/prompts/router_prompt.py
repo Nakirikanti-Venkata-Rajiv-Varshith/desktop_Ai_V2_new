@@ -10,7 +10,7 @@ Available Tools:
 3. "browser" - For general web browsing, opening URLs, creating tabs, searching the web, refreshing, or navigating back/forward.
 4. "system" - For checking system parameters like time, date, hostname, OS info, CPU, RAM, battery, disk storage, or IP address.
 5. "file" - For file-system operations like listing directories, reading local files, or creating folders.
-6. "chat" - greetings, small talk, acknowledgements, thanks, conversational messages.
+6. chat - greetings, casual conversation, thanks, introductions, general discussion.
 
 CRITICAL RULES:
 - Reply with ONLY the raw lowercase tool name string from the list above.
