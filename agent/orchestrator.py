@@ -21,6 +21,9 @@ class Orchestrator:
 
         results = []
 
+        if not plan.steps:
+            return ["Hello! How can I help you today?"]
+        
         for step in plan.steps:
 
             result = self.executor.execute(

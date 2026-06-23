@@ -45,6 +45,11 @@ class Planner:
         # 3. LLM Processing Fallback Pipeline
         tool_name = self.router.route(user_text)
 
+        if tool_name == "chat":
+
+            return TaskPlan(
+                steps=[]
+            )
         prompt = PromptBuilder.build(tool_name, user_text)
 
         raw = self.llm.generate(prompt)

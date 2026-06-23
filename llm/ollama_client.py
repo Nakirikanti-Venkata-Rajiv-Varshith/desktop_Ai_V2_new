@@ -29,7 +29,7 @@ class OllamaClient:
             tool_name = response.json().get("response", "").strip().lower()
             
             # Clean up potential extra wrapper punctuation or tokens
-            for possible_tool in ["gmail", "youtube", "browser", "system", "file"]:
+            for possible_tool in ["gmail", "youtube", "browser", "system", "file", "chat"]:
                 if possible_tool in tool_name:
                     return possible_tool
             return "system"  # Safe default fallback
