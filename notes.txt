@@ -57,6 +57,115 @@ chromium --remote-debugging-port=9222 --remote-allow-origins=*
 
 
 
-Structure:-
- 
-Use Command :- tree -a -I '*.pyc|__pycache__|venv'
+Structure of our project folder Use Command :- 
+
+tree -I '__pycache__|venv|build|dist|node_modules|__init__.py|*.pyc|*.txt|*.static|*.qm|*.so|*.dll|*.exe'
+
+.
+├── agent
+│   ├── executor.py
+│   ├── memory.py
+│   ├── orchestrator.py
+│   ├── parser.py
+│   ├── planner.py
+│   └── router.py
+├── api
+│   ├── main.py
+│   ├── models
+│   │   ├── execute_request.py
+│   │   └── execute_response.py
+│   └── routes
+│       ├── chat.py
+│       ├── execute.py
+│       ├── gmail.py
+│       ├── stream.py
+│       └── stream_request.py
+├── app.py
+├── browser
+│   ├── bootstrap.py
+│   ├── cdp_client.py
+│   ├── chromium.py
+│   └── focus.py
+├── config
+│   ├── constants.py
+│   ├── paths.py
+│   └── settings.py
+├── core
+│   └── agent_service.py
+├── data
+│   ├── commands.json
+│   └── websites.json
+├── gmail_search_debug.png
+├── llm
+│   ├── builders
+│   │   └── prompt_builder.py
+│   ├── chat_client.py
+│   ├── instructor_client.py
+│   ├── ollama_client.py
+│   └── prompts
+│       ├── base_prompt.py
+│       ├── browser_prompt.py
+│       ├── chat_prompt.py
+│       ├── file_prompt.py
+│       ├── gmail_prompt.py
+│       ├── router_prompt.py
+│       ├── system_prompt.py
+│       └── youtube_prompt.py
+├── logs
+│   ├── agent.log
+│   └── gmail_summary.log
+├── models
+│   ├── schemas.py
+│   ├── task_plan.py
+│   ├── tool_plan.py
+│   ├── tool_request.py
+│   └── tool_response.py
+├── no_llm_needed
+│   ├── chat_matcher.py
+│   ├── command_matcher.py
+│   └── predefined_commands.json
+├── tests
+│   ├── test_browser.py
+│   ├── test_gmail.py
+│   ├── test_system.py
+│   └── test_youtube.py
+├── tools
+│   ├── app
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── browser
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── chat
+│   │   └── tool.py
+│   ├── file
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── gmail
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── gui
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── logger.py
+│   ├── registry.py
+│   ├── system
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   └── youtube
+│       ├── prompt.py
+│       └── tool.py
+├── ui
+│   ├── command_splitter.py
+│   ├── event_worker.py
+│   ├── main_window.py
+│   ├── prompt_bar.py
+│   ├── prompt_window_looks.py
+│   ├── styles.py
+│   └── worker.py
+└── utils
+    ├── event_bus.py
+    ├── file_utils.py
+    ├── global_events.py
+    ├── helpers.py
+    └── logger.py

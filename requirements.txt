@@ -11,3 +11,4 @@ playwright
 instructor
 openai
 sse-starlette
+python-dateutil
