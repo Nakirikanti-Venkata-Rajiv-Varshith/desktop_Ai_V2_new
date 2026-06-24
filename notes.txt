@@ -61,6 +61,12 @@ Structure of our project folder Use Command :-
 
 tree -I '__pycache__|venv|build|dist|node_modules|__init__.py|*.pyc|*.txt|*.static|*.qm|*.so|*.dll|*.exe'
 
+if u wanna save in a text file
+
+tree -I '__pycache__|venv|build|dist|node_modules|__init__.py|*.pyc|*.txt|*.static|*.qm|*.so|*.dll|*.exe' > project_tree.txt
+
+
+
 .
 ├── agent
 │   ├── executor.py

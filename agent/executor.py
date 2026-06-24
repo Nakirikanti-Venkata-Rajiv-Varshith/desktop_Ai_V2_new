@@ -1,6 +1,6 @@
 from tools.registry import TOOLS
 from utils.global_events import event_bus
-
+from utils.behavior_tracker import BehaviorTracker
 
 class Executor:
 
@@ -10,7 +10,8 @@ class Executor:
         self,
         tool_name,
         function_name,
-        arguments
+        arguments,
+        user_text=None
     ):
         
         event_bus.emit(
@@ -33,6 +34,13 @@ class Executor:
 
         result = fn(
             **arguments
+        )
+        
+        BehaviorTracker.log(
+            tool_name,
+            function_name,
+            arguments,
+            user_text
         )
 
         event_bus.emit(

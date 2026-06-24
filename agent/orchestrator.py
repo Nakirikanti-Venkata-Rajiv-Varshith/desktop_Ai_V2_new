@@ -29,7 +29,8 @@ class Orchestrator:
             result = self.executor.execute(
                 step.tool,
                 step.function,
-                step.arguments
+                step.arguments,
+                step.user_text
             )
 
             results.append(result)
