@@ -4,7 +4,7 @@ import subprocess
 import time
 from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTextEdit, QLabel
 from PyQt6.QtCore import QThread, pyqtSignal
-
+from ui.event_worker import EventWorker
 from ui.prompt_bar import PromptBar
 from ui.command_splitter import split_commands
 from ui.prompt_window_looks import AESTHETIC_DARK_QSS
@@ -57,7 +57,7 @@ class AgentWorker(QThread):
                     )
                 else:
                     self.status_signal.emit(
-                        f"<b>AI Agent:</b> Successfully ran step. Result: {str(results)}"
+                        f"<b>AI Agent:</b> {str(results)}"
                     )
 
 
@@ -71,10 +71,26 @@ class AgentWorker(QThread):
 class MainWindow(QMainWindow):
     """Core Dashboard interface window."""
     
+    # def __init__(self):
+    #     super().__init__()
+    #     self.worker = None
+    #     self._init_ui()
+
     def __init__(self):
         super().__init__()
+
         self.worker = None
+
         self._init_ui()
+
+        # SSE/EventBus Listener
+        self.event_worker = EventWorker()
+
+        self.event_worker.event_received.connect(
+            self._handle_agent_event
+        )
+
+        self.event_worker.start()
 
     def _init_ui(self):
         self.setWindowTitle("Ubuntu AI Desktop Agent V2")
@@ -173,6 +189,16 @@ class MainWindow(QMainWindow):
             self.chat_display.append(f"{header}<font color='#f8f8f2'>{formatted_body}</font><br>")
         else:
             self.chat_display.append(f"<font color='#b388ff'>[System]</font> <font color='#a1a1b3'>{status}</font>")
+
+    def _handle_agent_event(
+        self,
+        message
+    ):
+
+        self.chat_display.append(
+            f"<font color='#8be9fd'>[Agent Event]</font> "
+            f"<font color='#f8f8f2'>{message}</font>"
+        )
 
     def _handle_worker_completion(self, success: bool):
         self.prompt_bar.set_running_state(False)

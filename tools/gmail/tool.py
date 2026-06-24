@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from playwright.sync_api import sync_playwright
 from pathlib import Path
 import ollama
+from utils.global_events import event_bus
 
 class GmailTool:
     def __init__(self, debug_port=9222):
@@ -68,11 +69,28 @@ class GmailTool:
         except Exception:
             return response
 
+    # @staticmethod
+    # def open():
+    #     """Fast-path command specifically just to open the UI."""
+    #     from tools.browser.tool import BrowserTool
+    #     BrowserTool.open_url("https://mail.google.com")
+    #     return "Gmail Opened"
+
     @staticmethod
     def open():
-        """Fast-path command specifically just to open the UI."""
-        from tools.browser.tool import BrowserTool
-        BrowserTool.open_url("https://mail.google.com")
+
+        event_bus.emit(
+            "Opening Gmail"
+        )
+
+        BrowserTool.open_url(
+            "https://mail.google.com"
+        )
+
+        event_bus.emit(
+            "Gmail opened"
+        )
+
         return "Gmail Opened"
 
     def compose_email(self, recipient: str, subject: str, body: str):
@@ -487,6 +505,10 @@ class GmailTool:
 
         try:
 
+            event_bus.emit(
+                "Connecting to Gmail inbox"
+            )
+
 
             with sync_playwright() as p:
 
@@ -525,8 +547,16 @@ class GmailTool:
 
                 gmail_page.bring_to_front()
 
+                event_bus.emit(
+                    "Inbox opened"
+                )
+
                 gmail_page.wait_for_timeout(
                     5000
+                )
+
+                event_bus.emit(
+                    "Reading email rows"
                 )
 
                 emails = gmail_page.evaluate("""
@@ -587,7 +617,10 @@ class GmailTool:
                 print("\n" + "="*100)
                 print("RAW EMAILS FROM GMAIL")
                 print("="*100)
-
+                
+                event_bus.emit(
+                    f"Found {len(emails)} emails"
+                )
                 for e in emails:
                     print(
                         f"SUBJECT: {e['subject']}"
@@ -657,6 +690,10 @@ class GmailTool:
                 f"\nTOTAL TODAY EMAILS: {len(filtered_emails)}\n"
             )
 
+            event_bus.emit(
+                f"Filtered {len(filtered_emails)} emails for {date_filter}"
+            )
+            
             return {
                 "status":"SUCCESS",
                 "message":f"{len(filtered_emails)} emails extracted",
@@ -676,6 +713,9 @@ class GmailTool:
     ):
 
         try:
+            event_bus.emit(
+                "Starting email summarization"
+            )
 
             fetch_result = (
                 self.fetch_emails_by_date(
@@ -691,12 +731,20 @@ class GmailTool:
             
             emails = fetch_result["emails"]
 
+            event_bus.emit(
+                f"Loaded {len(emails)} emails"
+            )
+
             if not emails:
                 return {
                     "status": "SUCCESS",
                     "summary": "No emails found for the requested date."
                 }
             
+            event_bus.emit(
+                "Building summary prompt"
+            )
+
             prompt = f"""
             You are a professional executive email summarization assistant.
 
@@ -795,6 +843,9 @@ class GmailTool:
             {json.dumps(emails, indent=2)}
             """
 
+            event_bus.emit(
+                "Generating summary using Qwen3"
+            )
 
             response = ollama.chat(
                 model="qwen3:8b",
@@ -811,6 +862,10 @@ class GmailTool:
                 ["content"]
             )
 
+            event_bus.emit(
+                "Summary generated"
+            )
+
             Path("logs").mkdir(
                 exist_ok=True
             )
@@ -822,6 +877,10 @@ class GmailTool:
             ) as f:
 
                 f.write(summary)
+
+            event_bus.emit(
+                "Summary saved"
+            )
 
             summary = response["message"]["content"]
 

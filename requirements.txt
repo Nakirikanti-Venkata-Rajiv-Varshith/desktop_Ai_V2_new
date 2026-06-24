@@ -10,3 +10,4 @@ youtube-transcript-api
 playwright
 instructor
 openai
+sse-starlette

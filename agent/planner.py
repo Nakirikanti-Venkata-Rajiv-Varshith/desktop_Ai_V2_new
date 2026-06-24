@@ -12,6 +12,7 @@ from models.task_plan import TaskPlan
 from models.tool_plan import ToolPlan
 from llm.instructor_client import InstructorClient
 from no_llm_needed.chat_matcher import is_chat
+from utils.global_events import event_bus
 
 class Planner:
 
@@ -21,8 +22,6 @@ class Planner:
         # self.llm = OllamaClient()
         self.llm = InstructorClient()
         self.matcher = CommandMatcher()  # Instantiate the fast-path keyword dictionary mapper
-
-
 
 
     def create_plan(self, user_text: str) -> TaskPlan:
@@ -41,13 +40,6 @@ class Planner:
             )
             return TaskPlan(steps=[tool_plan])
 
-        # 2. Add immediate conversational safeguard to prevent Ollama connection timeouts
-        clean_text = user_text.lower().strip()
-        if clean_text in ["hello", "hi", "hey", "test"]:
-            return TaskPlan(steps=[
-                ToolPlan(tool="system", function="current_time", arguments={})
-            ])
-        
 
         if is_chat(user_text):
 
@@ -63,43 +55,42 @@ class Planner:
                         ]
                     )
 
-        # 3. LLM Processing Fallback Pipeline
-        # tool_name = self.router.route(user_text)
 
-        # if tool_name == "chat":
-
-        #     return TaskPlan(
-        #         steps=[]
-        #     )
-        # prompt = PromptBuilder.build(tool_name, user_text)
-
-        # # raw = self.llm.generate(prompt)
-
-        # # # RECTIFIED: Correctly reference the instance variable 'self.parser' instead of 'Parser'
-        # # return self.parser.parse_and_validate(raw)
-
-        # plan = self.llm.generate_taskplan(
-        #     prompt
-        # )
-
-        # return plan
+        event_bus.emit(
+            f"Routing query: {user_text}"
+        )
 
         # 3. LLM Processing Fallback Pipeline
         tool_name = self.router.route(user_text)
 
+        event_bus.emit(
+            f"Selected tool: {tool_name}"
+        )
         if tool_name == "chat":
 
             return TaskPlan(
                 steps=[]
             )
 
+        event_bus.emit(
+            "Building prompt"
+        )
+
         prompt = PromptBuilder.build(
             tool_name,
             user_text
         )
 
+        event_bus.emit(
+            "Calling Instructor"
+        )
+
         tool_request = self.llm.generate_tool_request(
             prompt
+        )
+
+        event_bus.emit(
+            f"Generated plan: {tool_request.tool}.{tool_request.function}"
         )
 
         tool_plan = ToolPlan(

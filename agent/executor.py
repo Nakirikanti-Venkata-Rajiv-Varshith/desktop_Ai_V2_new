@@ -1,14 +1,21 @@
 from tools.registry import TOOLS
+from utils.global_events import event_bus
 
 
 class Executor:
 
+
+    
     def execute(
         self,
         tool_name,
         function_name,
         arguments
     ):
+        
+        event_bus.emit(
+                f"Executing {tool_name}.{function_name}"
+            )
 
         tool_class = TOOLS.get(tool_name)
 
@@ -24,4 +31,12 @@ class Executor:
             function_name
         )
 
-        return fn(**arguments)
+        result = fn(
+            **arguments
+        )
+
+        event_bus.emit(
+            f"Completed {tool_name}.{function_name}"
+        )
+
+        return result
