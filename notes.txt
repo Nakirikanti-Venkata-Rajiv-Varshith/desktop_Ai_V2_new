@@ -1,3 +1,11 @@
+THE CORE COMMAND WE NEED TO USE FOR CHATGPT
+
+i.  First for a goal give me plan step by step phase in detail we have to execute
+
+ii. Then take each phase and type {now guide me to complete this phase step in detail and wait till it got integarted perfectly}
+
+
+
 ## 1. Prerequisites (System Packages)
 Ubuntu requires explicit installation of core Python utilities and native GUI rendering libraries before installing the project packages. Run the following command block:
 
@@ -44,9 +52,14 @@ sudo apt install wmctrl
 
 
 
-8. Copy all files into the files directory in before level
+8.a Copy all files into the files directory in before level
 
 find . -type f ! -path '*/.*' ! -path '*/__pycache__/*' \( -name "*.py" -o -name "*.txt" -o -name "*.json" \) ! -name "__init__.py" -exec cp --update=none {} ../files/ \;
+
+
+8.b if u dont want to copy empty files:-
+find . -type f ! -path '*/.*' ! -path '*/__pycache__/*' \( -name "*.py" -o -name "*.txt" -o -name "*.json" \) ! -name "__init__.py" -size +0c -exec cp --update=none {} ../files/ \;
+
 
 
 
@@ -57,7 +70,7 @@ chromium --remote-debugging-port=9222 --remote-allow-origins=*
 
 
 
-Structure of our project folder Use Command :- 
+10. Structure of our project folder Use Command :- 
 
 tree -I '__pycache__|venv|build|dist|node_modules|__init__.py|*.pyc|*.txt|*.static|*.qm|*.so|*.dll|*.exe'
 

@@ -1,40 +1,11 @@
-import json
-from pathlib import Path
-
-from config.settings import DATA_DIR
-
+from agent.behavior_history import BehaviorHistory
 
 class WorkflowMemory:
-
-    HISTORY_FILE = (
-        Path(DATA_DIR)
-        / "user_behavior.json"
-    )
-
-    @classmethod
-    def load_history(cls):
-
-        if not cls.HISTORY_FILE.exists():
-            return []
-
-        try:
-
-            with open(
-                cls.HISTORY_FILE,
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                return json.load(f)
-
-        except Exception:
-
-            return []
 
     @classmethod
     def learn_workflows(cls):
 
-        history = cls.load_history()
+        history = BehaviorHistory.get_history()
 
         workflows = {}
 
@@ -90,6 +61,24 @@ class WorkflowMemory:
 
         return workflows
     
+    @classmethod
+    def record_execution(
+        cls,
+        tool: str,
+        function: str,
+        arguments: dict,
+        success: bool
+    ):
+        """
+        Update workflow knowledge after a completed execution.
+
+        Future:
+            - Learn repeated workflows
+            - Learn execution patterns
+            - Learn successful sequences
+        """
+        pass
+
     @classmethod
     def get_workflow(
         cls,

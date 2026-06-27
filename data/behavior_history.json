@@ -1,0 +1,481 @@
+{
+    "executions": [
+        {
+            "timestamp": "2026-06-27T13:50:36.459615",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:00:19.257599",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:07:37.846485",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:07:39.371847",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://mail.google.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:11:25.323183",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:14:23.760785",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "Imagine Dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:15:47.513865",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "balaya songs"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:17:06.874813",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "balaya songs"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:22:33.173703",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:22:34.694650",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://mail.google.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:22:59.206157",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:32:18.875323",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:32:33.468209",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:32:38.519619",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:39:41.768074",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:40:02.930671",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T14:51:35.934237",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:06:56.668859",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:09:29.450784",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:09:35.757840",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:09:35.762254",
+            "tool": "app",
+            "function": "open",
+            "arguments": {
+                "app": "chrome"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:11:46.314705",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:14:41.590959",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "balaya babu songs"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:15:18.515627",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T15:15:27.299879",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "lion king songs"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T16:52:56.338681",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T16:53:16.791723",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:06:58.252771",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:07:19.798336",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:07:21.319274",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:13:23.776982",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:13:23.777951",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": false
+        },
+        {
+            "timestamp": "2026-06-27T17:13:44.812946",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:13:44.813622",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": false
+        },
+        {
+            "timestamp": "2026-06-27T17:13:46.330492",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:13:46.331344",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": false
+        },
+        {
+            "timestamp": "2026-06-27T17:16:56.429963",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:17:21.483198",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:17:47.468874",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "youtube"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:43:26.926642",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:43:47.675147",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:43:49.192834",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:52:57.815408",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:53:18.325851",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T17:53:19.844755",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:01:49.662372",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:02:30.688504",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:02:40.950252",
+            "tool": "chat",
+            "function": "respond",
+            "arguments": {
+                "message": "John's email is john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:03:20.528130",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:11:45.798510",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:12:08.086715",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:12:09.605949",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true
+        },
+        {
+            "timestamp": "2026-06-27T18:12:17.460441",
+            "tool": "chat",
+            "function": "respond",
+            "arguments": {
+                "message": "how are you?"
+            },
+            "success": true
+        }
+    ]
+}

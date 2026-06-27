@@ -1,9 +1,8 @@
 .
 ├── agent
 │   ├── adaptive_memory.py
-│   ├── attribute_resolver.py
+│   ├── behavior_history.py
 │   ├── entity_memory.py
-│   ├── entity_resolver.py
 │   ├── executor.py
 │   ├── intent_memory.py
 │   ├── memory.py
@@ -38,6 +37,7 @@
 ├── core
 │   └── agent_service.py
 ├── data
+│   ├── behavior_history.json
 │   ├── commands.json
 │   ├── entity_memory.json
 │   ├── preferences.json
@@ -63,9 +63,12 @@
 ├── logs
 │   ├── agent.log
 │   └── gmail_summary.log
+├── memory
+│   └── memory_manager.py
 ├── models
 │   ├── execution_queue.py
 │   ├── queue_item.py
+│   ├── response_type.py
 │   ├── schemas.py
 │   ├── task_plan.py
 │   ├── tool_plan.py
@@ -73,7 +76,6 @@
 │   ├── tool_response.py
 │   └── turn_analysis.py
 ├── no_llm_needed
-│   ├── chat_matcher.py
 │   ├── command_matcher.py
 │   └── predefined_commands.json
 ├── tests
@@ -124,11 +126,10 @@
 │   ├── styles.py
 │   └── worker.py
 └── utils
-    ├── behavior_tracker.py
     ├── event_bus.py
     ├── file_utils.py
     ├── global_events.py
     ├── helpers.py
     └── logger.py
 
-27 directories, 105 files
+28 directories, 105 files

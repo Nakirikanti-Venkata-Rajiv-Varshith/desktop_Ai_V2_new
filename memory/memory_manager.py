@@ -1,9 +1,25 @@
 from agent.workflow_memory import WorkflowMemory
 from agent.adaptive_memory import AdaptiveMemory
 from agent.entity_memory import EntityMemory
+from agent.behavior_history import BehaviorHistory
 from models.turn_analysis import TurnAnalysis
 from utils.global_events import event_bus
 from tools.registered_tools_metadata import REGISTERED_TOOL_METADATA
+from models.task_plan import TaskPlan
+from models.tool_plan import ToolPlan
+
+"""
+Central gateway for all memory interactions.
+
+Responsibilities:
+
+- Workflow retrieval
+- Entity resolution
+- Execution logging
+
+Planner and Executor should never access
+individual memory modules directly.
+"""
 
 class MemoryManager:
     """
@@ -157,20 +173,31 @@ class MemoryManager:
                         f"{entity} -> {resolved}"
                     )
         return analysis
-        # for argument_name, memory_attribute in memory_bindings.items():
 
-        #     if memory_attribute is None:
-        #         continue
+    def _update_workflow_memory(
+        self,
+        tool: str,
+        function: str,
+        arguments: dict,
+        success: bool
+    ):
+        """
+        Route workflow learning.
 
-        #     if argument_name not in analysis.tool_call.arguments:
-        #         continue
+        Future:
+            - Learn repeated workflows
+            - Learn execution sequences
+            - Learn successful patterns
+        """
 
-        #     print(
-        #         f"{argument_name} = "
-        #         f"{analysis.tool_call.arguments[argument_name]}"
-        #     )
+        WorkflowMemory.record_execution(
+            tool=tool,
+            function=function,
+            arguments=arguments,
+            success=success
+        )
 
-        # return analysis
+
 
     def log_execution(
         self,
@@ -193,21 +220,160 @@ class MemoryManager:
         BehaviorHistory
             -> PreferenceMemory
         """
-        pass
+        # pass
+
+        event_bus.emit(
+            "MemoryManager received execution"
+        )
+
+        # Future:
+        # Trigger workflow learning.
+        
+        BehaviorHistory.record_execution(
+            tool=tool,
+            function=function,
+            arguments=arguments,
+            success=success
+        )
+        WorkflowMemory.record_execution(
+            tool=tool,
+            function=function,
+            arguments=arguments,
+            success=success
+        )
 
     def get_workflow(
         self,
         user_text: str
     ):
         """
-        Retrieve a previously learned workflow.
+        Route workflow retrieval.
+
+        Planner should never know which memory
+        stores workflows.
         """
-        return WorkflowMemory.get_workflow(
+
+        event_bus.emit(
+            "MemoryManager checking workflow memory"
+        )
+
+        workflow = WorkflowMemory.get_workflow(
             user_text
         )
+
+        return workflow
 
     def get_preferences(self) -> dict:
         """
         Retrieve stored user preferences.
         """
         return AdaptiveMemory.load_preferences()
+        
+    def prepare_user_text(
+        self,
+        user_text: str
+    ) -> str:
+        """
+        Prepare user text before planning.
+
+        Future responsibilities:
+        - Apply user preferences.
+        - Resolve aliases.
+        - Resolve semantic shortcuts.
+        - Normalize commands.
+        """
+
+        prefs = self.get_preferences()
+
+        music_platform = prefs.get(
+            "music_platform"
+        )
+
+        lowered = user_text.lower()
+
+        music_keywords = [
+            "play",
+            "song",
+            "music",
+            "listen"
+        ]
+
+        if (
+            music_platform == "youtube"
+            and any(
+                keyword in lowered
+                for keyword in music_keywords
+            )
+            and "youtube" not in lowered
+        ):
+
+            user_text += " on youtube"
+
+            event_bus.emit(
+                "PreferenceMemory: Added preferred platform youtube"
+            )
+
+        return user_text
+    
+
+    def get_workflow_plan(
+        self,
+        user_text: str
+    ) -> TaskPlan | None:
+        """
+        Retrieve a learned workflow and convert it into
+        an executable TaskPlan.
+
+        Planner should never know how workflows are stored.
+        """
+
+        workflow = self.get_workflow(
+            user_text
+        )
+
+        if workflow is None:
+            return None
+
+        steps = []
+
+        for step in workflow["steps"]:
+
+            steps.append(
+                ToolPlan(
+                    tool=step["tool"],
+                    function=step["function"],
+                    arguments=step.get(
+                        "arguments",
+                        {}
+                    ),
+                    user_text=user_text
+                )
+            )
+
+        return TaskPlan(
+            steps=steps
+        )
+    
+    def process_turn(
+        self,
+        analysis
+    ):
+        """
+        Process a completed TurnAnalysis.
+
+        Responsibilities:
+        - Persist durable facts
+        - Enrich tool arguments
+        - Future:
+            - Preference extraction
+            - Semantic enrichment
+            - Conversation updates
+        """
+
+        self.update_from_turn(
+            analysis
+        )
+
+        return self.enrich_analysis(
+            analysis
+        )

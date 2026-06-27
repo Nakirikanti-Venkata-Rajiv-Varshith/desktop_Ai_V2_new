@@ -26,89 +26,6 @@ class Planner:
         self.turn_analyzer = TurnAnalyzer()
         self.memory = MemoryManager()
 
-    def _apply_preferences(
-        self,
-        user_text: str
-    ) -> str:
-
-        prefs = self.memory.get_preferences()
-
-        music_platform = prefs.get(
-            "music_platform"
-        )
-
-        lowered = user_text.lower()
-
-        music_keywords = [
-            "play",
-            "song",
-            "music",
-            "listen"
-        ]
-
-        if (
-            music_platform == "youtube"
-            and any(
-                keyword in lowered
-                for keyword in music_keywords
-            )
-            and "youtube" not in lowered
-        ):
-
-            user_text += " on youtube"
-
-            event_bus.emit(
-                "AdaptiveMemory: Added preferred platform youtube"
-            )
-
-        return user_text
-
-    # def _apply_semantic_memory(
-    #     self,
-    #     user_text: str
-    # ) -> str:
-
-    #     words = user_text.split()
-
-    #     if len(words) < 2:
-    #         return user_text
-
-    #     attribute = (
-    #         AttributeResolver
-    #         .infer_attribute(
-    #             user_text
-    #         )
-    #     )
-
-    #     if not attribute:
-    #         return user_text
-
-    #     entity = words[1]
-
-    #     value = (
-    #         EntityResolver
-    #         .resolve(
-    #             entity,
-    #             attribute
-    #         )
-    #     )
-
-    #     if value:
-
-    #         print(
-    #             f"Resolved {entity} -> {value}"
-    #         )
-
-    #         user_text = user_text.replace(
-    #             entity,
-    #             value
-    #         )
-
-    #         event_bus.emit(
-    #             f"EntityMemory: Resolved {entity} -> {value}"
-    #         )
-
-    #     return user_text
 
     def create_plan(self, user_text: str) -> TaskPlan:
         """
@@ -119,42 +36,25 @@ class Planner:
         #     user_text
         # )
 
-        print(user_text)
+        user_text = self.memory.prepare_user_text(
+            user_text
+        )
         print("=" * 60)
         print("PLANNER CREATE_PLAN CALLED")
         print(f"user_text = {user_text}")
         print("=" * 60)
-        
-        # workflow = self.memory.get_workflow(
-        #     user_text
-        # )
-        workflow = None
-        if workflow:
+            
+        workflow_plan = self.memory.get_workflow_plan(
+            user_text
+        )
+
+        if workflow_plan:
 
             event_bus.emit(
                 f"Workflow hit: {user_text}"
             )
 
-            steps = []
-
-            for step in workflow["steps"]:
-
-                steps.append(
-                    ToolPlan(
-                        tool=step["tool"],
-                        function=step["function"],
-                        arguments=step.get(
-                            "arguments",
-                            {}
-                        ),
-                        user_text=user_text
-                    )
-                )
-
-            return TaskPlan(
-                steps=steps
-            )
-        
+            return workflow_plan
         # 1. Evaluate the deterministic No-LLM fast-path registry
         print("BEFORE COMMAND MATCHER")
         matched_action = self.matcher.match(user_text)
@@ -167,7 +67,7 @@ class Planner:
                 arguments=matched_action.get("arguments", {}),
                 user_text=user_text
             )
-            return TaskPlan(steps=[tool_plan])
+            return self._build_task_plan(tool_plan)
 
 
 
@@ -179,46 +79,48 @@ class Planner:
             user_text
         )
 
-        self.memory.update_from_turn(
+        analysis = self.memory.process_turn(
             analysis
+        )
+        return self._build_plan_from_analysis(
+            analysis,
+            user_text
         )
 
-        analysis = self.memory.enrich_analysis(
-            analysis
+    def _build_task_plan(
+        self,
+        steps: ToolPlan | list[ToolPlan]
+    ) -> TaskPlan:
+        """
+        Build a TaskPlan from one or more ToolPlans.
+        """
+
+        if isinstance(
+            steps,
+            ToolPlan
+        ):
+            steps = [steps]
+
+        return TaskPlan(
+            steps=steps
         )
-        
-        print("\nTURN ANALYSIS")
-        print(analysis)
-        print()
+    
+    def _build_plan_from_analysis(
+        self,
+        analysis,
+        user_text: str
+    ) -> TaskPlan:
 
         if analysis.response_type == ResponseType.CHAT:
-
-            return TaskPlan(
-                steps=[
-                    ToolPlan(
-                        tool="chat",
-                        function="respond",
-                        arguments={
-                            "message": user_text
-                        },
-                        user_text=user_text
-                    )
-                ]
+            return self._build_chat_plan(
+                user_text
             )
+
         elif analysis.response_type == ResponseType.KNOWLEDGE:
-
-            return TaskPlan(
-                steps=[
-                    ToolPlan(
-                        tool="chat",
-                        function="respond",
-                        arguments={
-                            "message": user_text
-                        },
-                        user_text=user_text
-                    )
-                ]
+            return self._build_chat_plan(
+                user_text
             )
+
         elif analysis.response_type == ResponseType.TOOL:
 
             if (
@@ -226,24 +128,58 @@ class Planner:
                 or analysis.tool_call.tool is None
                 or analysis.tool_call.function is None
             ):
-                return TaskPlan(steps=[])
-            
+                return self._empty_plan()
+
             event_bus.emit(
                 f"Generated plan: {analysis.tool_call.tool}.{analysis.tool_call.function}"
             )
 
-            tool_plan = ToolPlan(
-                tool=analysis.tool_call.tool,
-                function=analysis.tool_call.function,
-                arguments=analysis.tool_call.arguments,
-                user_text=user_text
+            tool_plan = self._build_tool_plan(
+                analysis,
+                user_text
             )
 
-            print(tool_plan)
-            return TaskPlan(
-                steps=[tool_plan]
+            return self._build_task_plan(
+                tool_plan
             )
-        
+
+        return self._empty_plan()
+    
+    def _build_chat_plan(
+        self,
+        user_text: str
+    ) -> TaskPlan:
+
+        tool_plan = ToolPlan(
+            tool="chat",
+            function="respond",
+            arguments={
+                "message": user_text
+            },
+            user_text=user_text
+        )
+
+        return self._build_task_plan(
+            tool_plan
+        )
+    
+    def _build_tool_plan(
+        self,
+        analysis,
+        user_text: str
+    ) -> ToolPlan:
+
+        return ToolPlan(
+            tool=analysis.tool_call.tool,
+            function=analysis.tool_call.function,
+            arguments=analysis.tool_call.arguments,
+            user_text=user_text
+        )
+
+    def _empty_plan(
+        self
+    ) -> TaskPlan:
+
         return TaskPlan(
-        steps=[]
-    )
+            steps=[]
+        )
