@@ -4,6 +4,7 @@ from instructor import Mode
 
 from config.settings import OLLAMA_MODEL
 from models.tool_request import ToolRequest
+from models.turn_analysis import TurnAnalysis
 
 
 class InstructorClient:
@@ -53,6 +54,49 @@ class InstructorClient:
             print("\n")
             print("=" * 80)
             print("INSTRUCTOR ERROR")
+            print("=" * 80)
+            print(e)
+            print("=" * 80)
+            print("\n")
+
+            raise
+
+    def generate_turn_analysis(
+        self,
+        prompt: str
+    ) -> TurnAnalysis:
+
+        try:
+
+            response = self.client.chat.completions.create(
+
+                model=OLLAMA_MODEL,
+
+                response_model=TurnAnalysis,
+
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ]
+            )
+
+            print("\n")
+            print("=" * 80)
+            print("TURN ANALYSIS")
+            print("=" * 80)
+            print(response)
+            print("=" * 80)
+            print("\n")
+
+            return response
+
+        except Exception as e:
+
+            print("\n")
+            print("=" * 80)
+            print("TURN ANALYSIS ERROR")
             print("=" * 80)
             print(e)
             print("=" * 80)

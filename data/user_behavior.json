@@ -261,5 +261,645 @@
         "arguments": {
             "query": "justin beiber songs"
         }
+    },
+    {
+        "timestamp": "2026-06-24T20:56:16.422687",
+        "user_text": "send email to balaya balaya@gmail.com",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "balaya@gmail.com",
+            "subject": "Email",
+            "body": "Hello, I hope this email finds you well."
+        }
+    },
+    {
+        "timestamp": "2026-06-25T11:42:38.626008",
+        "user_text": "play Justin Bieber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "Justin Bieber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T13:36:33.456666",
+        "user_text": "open youtube",
+        "tool": "browser",
+        "function": "open_url",
+        "arguments": {
+            "url": "https://youtube.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T13:36:57.238549",
+        "user_text": "search for justin beiber songs in youtube",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T13:37:05.008303",
+        "user_text": "play first video",
+        "tool": "youtube",
+        "function": "play_first",
+        "arguments": {}
+    },
+    {
+        "timestamp": "2026-06-25T13:37:11.839473",
+        "user_text": "skip ad",
+        "tool": "youtube",
+        "function": "skip_ad",
+        "arguments": {}
+    },
+    {
+        "timestamp": "2026-06-25T13:38:33.928561",
+        "user_text": "exit video",
+        "tool": "youtube",
+        "function": "exit_video",
+        "arguments": {}
+    },
+    {
+        "timestamp": "2026-06-25T14:49:57.357044",
+        "user_text": "hello ?",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "hello ?"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T14:52:48.422351",
+        "user_text": "hello?",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "hello?"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:11:07.421063",
+        "user_text": "hello?",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "hello?"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:11:21.964892",
+        "user_text": "what is the menaing of king?",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "what is the menaing of king?"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:11:23.499343",
+        "user_text": "open youtube",
+        "tool": "browser",
+        "function": "open_url",
+        "arguments": {
+            "url": "https://youtube.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:11:29.791475",
+        "user_text": "search for bellie elish songs in youtube",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "bellie elish songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:11:36.073560",
+        "user_text": "play first video",
+        "tool": "youtube",
+        "function": "play_first",
+        "arguments": {}
+    },
+    {
+        "timestamp": "2026-06-25T15:54:16.168873",
+        "user_text": "hello",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "hello"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:54:27.733168",
+        "user_text": "what is the meaning of king",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "what is the meaning of king"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:54:27.742712",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:54:28.151014",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "Justin Bieber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:54:28.356199",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:57:00.390352",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:57:00.714667",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "Justin Bieber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:57:00.918657",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T15:57:43.938190",
+        "user_text": "play arjith sign songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "arjith sign songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:15:07.841896",
+        "user_text": "John's phone number is 9876543210",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's phone number is 9876543210"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:17:25.163297",
+        "user_text": "John's phone number is 9876543210",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's phone number is 9876543210"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:18:24.258054",
+        "user_text": "John's phone number is 9876543210",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's phone number is 9876543210"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:23:52.790061",
+        "user_text": "John's phone number is 9876543210",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's phone number is 9876543210"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:27:59.509486",
+        "user_text": "John's email is john@gmail.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's email is john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:31:30.528479",
+        "user_text": "John's favorite website is github.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's favorite website is github.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:33:04.313453",
+        "user_text": "John's favorite website is youtube.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's favorite website is youtube.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:41:18.116603",
+        "user_text": "what is the meaning of legend?",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "what is the meaning of legend?"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:41:18.130841",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:41:18.503273",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "Justin Bieber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-25T16:41:18.740039",
+        "user_text": "play justin beiber songs",
+        "tool": "youtube",
+        "function": "search",
+        "arguments": {
+            "query": "justin beiber songs"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T11:31:54.008614",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T11:35:21.709969",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T11:41:30.178209",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T12:01:21.749890",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T12:04:48.375747",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T20:44:51.616276",
+        "user_text": "play imagine dragon songs",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T20:48:27.332598",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T20:56:56.883704",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T20:57:04.958900",
+        "user_text": "https://mail.google.com",
+        "tool": "gmail",
+        "function": "open",
+        "arguments": {}
+    },
+    {
+        "timestamp": "2026-06-26T20:57:04.969997",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T20:58:59.355467",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T20:58:59.379519",
+        "user_text": "play imagine dragons",
+        "tool": "youtube",
+        "function": "search_query",
+        "arguments": {
+            "query": "imagine dragons"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:15:46.219255",
+        "user_text": "John's email is john@gmail.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's email is john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:15:56.714443",
+        "user_text": "John's phone number is 9876543210",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's phone number is 9876543210"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:16:06.296046",
+        "user_text": "John's favorite website is youtube.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's favorite website is youtube.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:20:45.432186",
+        "user_text": "email john@gmail.com",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:24:25.869227",
+        "user_text": "John's email is john@gmail.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "John's email is john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:25:00.603004",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:27:37.472656",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:29:30.500181",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:31:59.027995",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:36:53.792202",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:39:35.676653",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:40:22.525554",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:41:57.452527",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:46:17.012817",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:48:13.896691",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:51:02.503103",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:55:27.328087",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:58:00.759814",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T21:58:35.912381",
+        "user_text": "email varshith his mail is varshith@gmail.com",
+        "tool": "chat",
+        "function": "respond",
+        "arguments": {
+            "message": "email varshith his mail is varshith@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:01:44.997197",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:01:50.043515",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:03:54.196597",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:06:55.947146",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:10:44.961206",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:10:50.007730",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john@gmail.com"
+        }
+    },
+    {
+        "timestamp": "2026-06-26T22:11:59.494043",
+        "user_text": "email john",
+        "tool": "gmail",
+        "function": "compose_email",
+        "arguments": {
+            "recipient": "john@gmail.com"
+        }
     }
 ]

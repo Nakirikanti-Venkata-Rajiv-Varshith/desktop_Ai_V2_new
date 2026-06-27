@@ -94,7 +94,7 @@ class GmailBasicTool:
 
         return "Gmail Opened"
 
-    def compose_email(self, recipient: str, subject: str, body: str):
+    def compose_email(self, recipient: str, subject: str | None = None, body: str | None = None):
         """
         Brings Chromium into focus, ensures Gmail is open, clicks compose,
         and cleanly populates the email recipient, subject, and message body.

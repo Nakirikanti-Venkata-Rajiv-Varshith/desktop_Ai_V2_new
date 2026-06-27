@@ -1,18 +1,18 @@
 # agent/planner.py
 from agent.router import Router
 from agent.parser import Parser
-from agent.workflow_memory import WorkflowMemory
-from agent.adaptive_memory import AdaptiveMemory
 from llm.builders.prompt_builder import PromptBuilder
+from agent.turn_analyzer import TurnAnalyzer
+from memory.memory_manager import MemoryManager
 # from llm.ollama_client import OllamaClient
 
 # Core Bridging Imports for Fast-Path and Validation Execution
+from models.response_type import ResponseType
 from no_llm_needed.command_matcher import CommandMatcher
 # from models.tool_request import ToolRequest
 from models.task_plan import TaskPlan
 from models.tool_plan import ToolPlan
 from llm.instructor_client import InstructorClient
-from no_llm_needed.chat_matcher import is_chat
 from utils.global_events import event_bus
 
 class Planner:
@@ -23,13 +23,15 @@ class Planner:
         # self.llm = OllamaClient()
         self.llm = InstructorClient()
         self.matcher = CommandMatcher()  # Instantiate the fast-path keyword dictionary mapper
+        self.turn_analyzer = TurnAnalyzer()
+        self.memory = MemoryManager()
 
     def _apply_preferences(
         self,
         user_text: str
     ) -> str:
 
-        prefs = AdaptiveMemory.load_preferences()
+        prefs = self.memory.get_preferences()
 
         music_platform = prefs.get(
             "music_platform"
@@ -61,20 +63,72 @@ class Planner:
 
         return user_text
 
+    # def _apply_semantic_memory(
+    #     self,
+    #     user_text: str
+    # ) -> str:
+
+    #     words = user_text.split()
+
+    #     if len(words) < 2:
+    #         return user_text
+
+    #     attribute = (
+    #         AttributeResolver
+    #         .infer_attribute(
+    #             user_text
+    #         )
+    #     )
+
+    #     if not attribute:
+    #         return user_text
+
+    #     entity = words[1]
+
+    #     value = (
+    #         EntityResolver
+    #         .resolve(
+    #             entity,
+    #             attribute
+    #         )
+    #     )
+
+    #     if value:
+
+    #         print(
+    #             f"Resolved {entity} -> {value}"
+    #         )
+
+    #         user_text = user_text.replace(
+    #             entity,
+    #             value
+    #         )
+
+    #         event_bus.emit(
+    #             f"EntityMemory: Resolved {entity} -> {value}"
+    #         )
+
+    #     return user_text
 
     def create_plan(self, user_text: str) -> TaskPlan:
         """
         Coordinates intent tracking by checking the rapid rule match engine 
         before routing text downstream to the local Ollama LLM setup.
         """
-        user_text = self._apply_preferences(
-            user_text
-        )
+        # user_text = self._apply_semantic_memory(
+        #     user_text
+        # )
 
-        workflow = WorkflowMemory.get_workflow(
-            user_text
-        )
-
+        print(user_text)
+        print("=" * 60)
+        print("PLANNER CREATE_PLAN CALLED")
+        print(f"user_text = {user_text}")
+        print("=" * 60)
+        
+        # workflow = self.memory.get_workflow(
+        #     user_text
+        # )
+        workflow = None
         if workflow:
 
             event_bus.emit(
@@ -102,7 +156,9 @@ class Planner:
             )
         
         # 1. Evaluate the deterministic No-LLM fast-path registry
+        print("BEFORE COMMAND MATCHER")
         matched_action = self.matcher.match(user_text)
+        print("MATCHED ACTION:", matched_action)
         if matched_action:
             # Safely structure the raw data mapping directly into expected Pydantic records
             tool_plan = ToolPlan(
@@ -114,67 +170,80 @@ class Planner:
             return TaskPlan(steps=[tool_plan])
 
 
-        if is_chat(user_text):
-
-                    return TaskPlan(
-                        steps=[
-                            ToolPlan(
-                                tool="chat",
-                                function="respond",
-                                arguments={
-                                    "message": user_text
-                                },
-                                user_text=user_text
-                            )
-                        ]
-                    )
-
 
         event_bus.emit(
-            f"Routing query: {user_text}"
+            "Running Turn Analyzer"
         )
 
-        # 3. LLM Processing Fallback Pipeline
-        tool_name = self.router.route(user_text)
-
-        event_bus.emit(
-            f"Selected tool: {tool_name}"
-        )
-        if tool_name == "chat":
-
-            return TaskPlan(
-                steps=[]
-            )
-
-        event_bus.emit(
-            "Building prompt"
-        )
-
-        prompt = PromptBuilder.build(
-            tool_name,
+        analysis = self.turn_analyzer.analyze(
             user_text
         )
 
-        event_bus.emit(
-            "Calling Instructor"
+        self.memory.update_from_turn(
+            analysis
         )
 
-        tool_request = self.llm.generate_tool_request(
-            prompt
+        analysis = self.memory.enrich_analysis(
+            analysis
         )
+        
+        print("\nTURN ANALYSIS")
+        print(analysis)
+        print()
 
-        event_bus.emit(
-            f"Generated plan: {tool_request.tool}.{tool_request.function}"
-        )
+        if analysis.response_type == ResponseType.CHAT:
 
-        tool_plan = ToolPlan(
-            tool=tool_request.tool,
-            function=tool_request.function,
-            arguments=tool_request.arguments,
-            user_text=user_text
-        )
+            return TaskPlan(
+                steps=[
+                    ToolPlan(
+                        tool="chat",
+                        function="respond",
+                        arguments={
+                            "message": user_text
+                        },
+                        user_text=user_text
+                    )
+                ]
+            )
+        elif analysis.response_type == ResponseType.KNOWLEDGE:
 
-        print(tool_plan)
+            return TaskPlan(
+                steps=[
+                    ToolPlan(
+                        tool="chat",
+                        function="respond",
+                        arguments={
+                            "message": user_text
+                        },
+                        user_text=user_text
+                    )
+                ]
+            )
+        elif analysis.response_type == ResponseType.TOOL:
+
+            if (
+                analysis.tool_call is None
+                or analysis.tool_call.tool is None
+                or analysis.tool_call.function is None
+            ):
+                return TaskPlan(steps=[])
+            
+            event_bus.emit(
+                f"Generated plan: {analysis.tool_call.tool}.{analysis.tool_call.function}"
+            )
+
+            tool_plan = ToolPlan(
+                tool=analysis.tool_call.tool,
+                function=analysis.tool_call.function,
+                arguments=analysis.tool_call.arguments,
+                user_text=user_text
+            )
+
+            print(tool_plan)
+            return TaskPlan(
+                steps=[tool_plan]
+            )
+        
         return TaskPlan(
-            steps=[tool_plan]
-        )
+        steps=[]
+    )

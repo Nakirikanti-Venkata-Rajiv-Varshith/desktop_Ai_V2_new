@@ -1,12 +1,19 @@
 .
 ├── agent
+│   ├── adaptive_memory.py
+│   ├── attribute_resolver.py
+│   ├── entity_memory.py
+│   ├── entity_resolver.py
 │   ├── executor.py
+│   ├── intent_memory.py
 │   ├── memory.py
 │   ├── orchestrator.py
 │   ├── parser.py
 │   ├── planner.py
 │   ├── queue_builder.py
-│   └── router.py
+│   ├── router.py
+│   ├── turn_analyzer.py
+│   └── workflow_memory.py
 ├── api
 │   ├── main.py
 │   ├── models
@@ -32,6 +39,10 @@
 │   └── agent_service.py
 ├── data
 │   ├── commands.json
+│   ├── entity_memory.json
+│   ├── preferences.json
+│   ├── semantic_memory.json
+│   ├── user_behavior.json
 │   └── websites.json
 ├── llm
 │   ├── builders
@@ -47,6 +58,7 @@
 │       ├── gmail_prompt.py
 │       ├── router_prompt.py
 │       ├── system_prompt.py
+│       ├── turn_analyzer_prompt.py
 │       └── youtube_prompt.py
 ├── logs
 │   ├── agent.log
@@ -58,7 +70,8 @@
 │   ├── task_plan.py
 │   ├── tool_plan.py
 │   ├── tool_request.py
-│   └── tool_response.py
+│   ├── tool_response.py
+│   └── turn_analysis.py
 ├── no_llm_needed
 │   ├── chat_matcher.py
 │   ├── command_matcher.py
@@ -83,17 +96,20 @@
 │   ├── gmail
 │   │   ├── gmail_basic_tool.py
 │   │   ├── gmail_summary_tool.py
+│   │   ├── metadata.py
 │   │   ├── prompt.py
 │   │   └── tool.py
 │   ├── gui
 │   │   ├── prompt.py
 │   │   └── tool.py
 │   ├── logger.py
+│   ├── registered_tools_metadata.py
 │   ├── registry.py
 │   ├── system
 │   │   ├── prompt.py
 │   │   └── tool.py
 │   └── youtube
+│       ├── metadata.py
 │       ├── prompt.py
 │       └── tool.py
 ├── ui
@@ -108,10 +124,11 @@
 │   ├── styles.py
 │   └── worker.py
 └── utils
+    ├── behavior_tracker.py
     ├── event_bus.py
     ├── file_utils.py
     ├── global_events.py
     ├── helpers.py
     └── logger.py
 
-27 directories, 88 files
+27 directories, 105 files

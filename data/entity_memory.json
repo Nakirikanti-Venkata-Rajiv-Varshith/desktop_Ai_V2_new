@@ -1,0 +1,21 @@
+{
+    "entities": {
+        "john_phone_number": {
+            "number": "9876543210"
+        },
+        "john_email": {
+            "email_address": "john@gmail.com"
+        },
+        "john": {
+            "favorite_website": "youtube.com",
+            "email": "john@gmail.com",
+            "phone_number": "9876543210"
+        },
+        "john_favorite_website": {
+            "website_url": "youtube.com"
+        },
+        "varshith": {
+            "email": "varshith@gmail.com"
+        }
+    }
+}

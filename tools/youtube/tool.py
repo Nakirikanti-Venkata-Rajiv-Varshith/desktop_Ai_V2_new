@@ -5,6 +5,52 @@ import subprocess
 
 class YouTubeTool:
 
+    AI_FUNCTIONS = {
+
+        "search_query":
+            "Search YouTube for videos.",
+
+        "play_first":
+            "Play the first video from the current search results.",
+
+        "play_visible_video":
+            "Play a currently visible video.",
+
+        "pause":
+            "Pause the current video.",
+
+        "resume":
+            "Resume the current video.",
+
+        "skip_forward":
+            "Skip forward in the current video.",
+
+        "skip_backward":
+            "Skip backward in the current video.",
+
+        "skip_ad":
+            "Skip an advertisement if possible.",
+
+        "set_volume":
+            "Set the playback volume.",
+
+        "increase_volume":
+            "Increase the playback volume.",
+
+        "decrease_volume":
+            "Decrease the playback volume.",
+
+        "search":
+            "Search YouTube using the browser search interface.",
+
+        "exit_video":
+            "Exit the current video.",
+
+        "scroll_videos":
+            "Scroll through the list of videos."
+    }
+
+
     def __init__(self):
         self.client = CDPClient()
         self.client.connect()
