@@ -1,8 +1,8 @@
 # agent/planner.py
 from agent.router import Router
 from agent.parser import Parser
-from agent.turn_analyzer import TurnAnalyzer
 from memory.memory_manager import MemoryManager
+from models.turn_analysis import TurnAnalysis
 # from llm.ollama_client import OllamaClient
 
 # Core Bridging Imports for Fast-Path and Validation Execution
@@ -19,14 +19,16 @@ class Planner:
     def __init__(self):
         self.router = Router()
         self.parser = Parser()
-        # self.llm = OllamaClient()
         self.llm = InstructorClient()
-        self.matcher = CommandMatcher()  # Instantiate the fast-path keyword dictionary mapper
-        self.turn_analyzer = TurnAnalyzer()
+        self.matcher = CommandMatcher() 
         self.memory = MemoryManager()
 
 
-    def create_plan(self, user_text: str) -> TaskPlan:
+    def create_plan(
+        self,
+        analysis: TurnAnalysis,
+        user_text: str
+    ) -> TaskPlan:
         """
         Coordinates intent tracking by checking the rapid rule match engine 
         before routing text downstream to the local Ollama LLM setup.
@@ -70,17 +72,17 @@ class Planner:
 
 
 
-        event_bus.emit(
-            "Running Turn Analyzer"
-        )
+        # event_bus.emit(
+        #     "Running Turn Analyzer"
+        # )
 
-        analysis = self.turn_analyzer.analyze(
-            user_text
-        )
+        # analysis = self.turn_analyzer.analyze(
+        #     user_text
+        # )
 
-        analysis = self.memory.process_turn(
-            analysis
-        )
+        # analysis = self.memory.process_turn(
+        #     analysis
+        # )
         return self._build_plan_from_analysis(
             analysis,
             user_text

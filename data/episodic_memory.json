@@ -9,6 +9,36 @@
             "timestamp": "2026-06-28T10:31:10",
             "category": "youtube",
             "event": "Played Imagine Dragons"
+        },
+        {
+            "timestamp": "2026-06-28T13:54:15.549449",
+            "category": "browser",
+            "event": "browser.open_url (url=https://mail.google.com)"
+        },
+        {
+            "timestamp": "2026-06-28T13:54:21.123100",
+            "category": "youtube",
+            "event": "youtube.search_query (query=imagine dragons)"
+        },
+        {
+            "timestamp": "2026-06-28T13:57:54.869206",
+            "category": "browser",
+            "event": "browser.open_url (url=https://mail.google.com)"
+        },
+        {
+            "timestamp": "2026-06-28T13:58:02.937328",
+            "category": "youtube",
+            "event": "youtube.search_query (query=imagine dragons)"
+        },
+        {
+            "timestamp": "2026-06-28T14:10:35.460043",
+            "category": "browser",
+            "event": "browser.open_url (url=https://mail.google.com)"
+        },
+        {
+            "timestamp": "2026-06-28T14:10:47.743644",
+            "category": "gmail",
+            "event": "gmail.compose_email (recipient=john@gmail.com)"
         }
     ]
 }

@@ -4,6 +4,10 @@ from llm.prompts.turn_analyzer_prompt import (
     build_turn_analyzer_prompt
 )
 
+from conversation.conversation_context import (
+    ConversationContext
+)
+
 from models.turn_analysis import TurnAnalysis
 
 
@@ -15,13 +19,21 @@ class TurnAnalyzer:
 
     def analyze(
         self,
-        user_message: str,
-        recent_context: str = ""
+        context: ConversationContext
     ) -> TurnAnalysis:
+        """
+        Analyze the current user request using
+        the conversation context.
+        """
+        print("=" * 80)
+        print("RECENT CONTEXT")
+        print("=" * 80)
+        print(context.recent_context)
+        print()
 
         prompt = build_turn_analyzer_prompt(
-            recent_context=recent_context,
-            user_message=user_message
+            recent_context=context.recent_context,
+            user_message=context.current_message
         )
 
         return self.client.generate_turn_analysis(

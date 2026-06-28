@@ -1,19 +1,19 @@
-from agent.episodic_memory import EpisodicMemory
+from conversation.conversation_manager import ConversationManager
 
-print(
-    EpisodicMemory.search_events(
-        "gmail"
-    )
+manager = ConversationManager()
+
+manager.add_user_message(
+    "Open Gmail"
+)
+
+manager.add_assistant_message(
+    "Opened Gmail"
+)
+
+manager.add_user_message(
+    "Compose email"
 )
 
 print(
-    EpisodicMemory.search_events(
-        "john"
-    )
-)
-
-print(
-    EpisodicMemory.search_events(
-        "youtube"
-    )
+    manager.build_recent_context()
 )
