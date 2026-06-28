@@ -1,4 +1,5 @@
 from agent.behavior_history import BehaviorHistory
+from models.execution_event import ExecutionEvent
 
 class WorkflowMemory:
 
@@ -64,10 +65,7 @@ class WorkflowMemory:
     @classmethod
     def record_execution(
         cls,
-        tool: str,
-        function: str,
-        arguments: dict,
-        success: bool
+        event: ExecutionEvent
     ):
         """
         Update workflow knowledge after a completed execution.

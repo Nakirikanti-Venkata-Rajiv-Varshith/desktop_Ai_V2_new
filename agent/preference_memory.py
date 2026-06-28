@@ -4,9 +4,28 @@ import json
 from pathlib import Path
 from collections import Counter
 from config.settings import DATA_DIR
+from models.execution_event import ExecutionEvent
 
 
-class AdaptiveMemory:
+class PreferenceMemory:
+
+    """
+    PreferenceMemory 
+
+    Stores long-term user preferences.
+
+    Examples:
+    - Preferred browser
+    - Preferred application
+    - Preferred YouTube quality
+    - Preferred email style
+    - Preferred music service
+
+    This memory should NOT store:
+    - Facts (EntityMemory)
+    - Workflows (WorkflowMemory)
+    - Execution history (BehaviorHistory)
+    """
 
     FILE_PATH = Path(DATA_DIR) / "user_behavior.json"
     PREFERENCES_FILE = Path(DATA_DIR) / "preferences.json"
@@ -189,9 +208,10 @@ class AdaptiveMemory:
         }
     
     @classmethod
-    def save_preferences(cls):
-
-        preferences = cls.extract_preferences()
+    def write_preferences(
+        cls,
+        preferences: dict
+    ):
 
         cls.PREFERENCES_FILE.parent.mkdir(
             parents=True,
@@ -209,8 +229,6 @@ class AdaptiveMemory:
                 f,
                 indent=4
             )
-
-        return preferences
     
     @classmethod
     def load_preferences(cls):
@@ -232,3 +250,52 @@ class AdaptiveMemory:
         except Exception:
 
             return {}
+        
+    @classmethod
+    def get_preferences(cls):
+
+        preferences = cls.load_preferences()
+
+        if preferences:
+            return preferences
+
+        preferences = cls.extract_preferences()
+
+        cls.write_preferences(
+            preferences
+        )
+
+        return preferences
+        
+    @classmethod
+    def record_execution(
+        cls,
+        event: ExecutionEvent
+    ):
+        """
+        Incrementally update user preferences
+        from a successful execution.
+
+        Future versions will learn:
+        - preferred browser
+        - preferred applications
+        - preferred websites
+        - preferred music platform
+        - preferred email style
+        """
+
+        if not event.success:
+            return
+
+        preferences = cls.get_preferences()
+
+        if not preferences:
+            preferences = {}
+
+        # First incremental learning rule
+        if event.tool == "youtube":
+            preferences["music_platform"] = "youtube"
+
+        cls.write_preferences(
+            preferences
+        )

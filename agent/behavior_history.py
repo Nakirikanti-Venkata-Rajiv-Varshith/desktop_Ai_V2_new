@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 
 from config.settings import DATA_DIR
+from models.execution_event import ExecutionEvent
 
 
 class BehaviorHistory:
@@ -62,11 +63,14 @@ class BehaviorHistory:
     @classmethod
     def record_execution(
         cls,
-        tool: str,
-        function: str,
-        arguments: dict,
-        success: bool
+        event: ExecutionEvent
     ):
+        """
+        Record a completed execution.
+
+        BehaviorHistory is the source of truth for
+        execution history.
+        """
 
         history = cls.load_history()
 
@@ -78,10 +82,11 @@ class BehaviorHistory:
         history["executions"].append(
             {
                 "timestamp": datetime.now().isoformat(),
-                "tool": tool,
-                "function": function,
-                "arguments": arguments,
-                "success": success
+                "tool": event.tool,
+                "function": event.function,
+                "arguments": event.arguments,
+                "success": event.success,
+                "user_text": event.user_text
             }
         )
 

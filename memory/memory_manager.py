@@ -1,13 +1,15 @@
 from agent.workflow_memory import WorkflowMemory
-from agent.adaptive_memory import AdaptiveMemory
+from agent.preference_memory import PreferenceMemory
 from agent.entity_memory import EntityMemory
 from agent.behavior_history import BehaviorHistory
+from models.execution_event import ExecutionEvent
 from models.turn_analysis import TurnAnalysis
 from utils.global_events import event_bus
 from tools.registered_tools_metadata import REGISTERED_TOOL_METADATA
 from models.task_plan import TaskPlan
 from models.tool_plan import ToolPlan
-
+from models.execution_event import ExecutionEvent
+from agent.episodic_memory import EpisodicMemory
 """
 Central gateway for all memory interactions.
 
@@ -176,28 +178,42 @@ class MemoryManager:
 
     def _update_workflow_memory(
         self,
-        tool: str,
-        function: str,
-        arguments: dict,
-        success: bool
+        event: ExecutionEvent
     ):
         """
         Route workflow learning.
-
-        Future:
-            - Learn repeated workflows
-            - Learn execution sequences
-            - Learn successful patterns
         """
 
         WorkflowMemory.record_execution(
-            tool=tool,
-            function=function,
-            arguments=arguments,
-            success=success
+            event
         )
 
+    def _update_preference_memory(
+        self,
+        event: ExecutionEvent
+    ):
+        """
+        Route preference learning.
+        """
 
+        PreferenceMemory.record_execution(
+            event
+        )
+
+    def _update_episodic_memory(
+        self,
+        event: ExecutionEvent
+    ):
+        """
+        Route episodic learning.
+
+        EpisodicMemory stores chronological
+        experiences rather than execution details.
+        """
+
+        EpisodicMemory.record_execution(
+            event
+        )
 
     def log_execution(
         self,
@@ -220,7 +236,16 @@ class MemoryManager:
         BehaviorHistory
             -> PreferenceMemory
         """
-        # pass
+        event = ExecutionEvent(
+            tool=tool,
+            function=function,
+            arguments=arguments,
+            success=success
+        )
+
+        self._update_workflow_memory(
+            event
+        )
 
         event_bus.emit(
             "MemoryManager received execution"
@@ -230,16 +255,19 @@ class MemoryManager:
         # Trigger workflow learning.
         
         BehaviorHistory.record_execution(
-            tool=tool,
-            function=function,
-            arguments=arguments,
-            success=success
+            event
         )
-        WorkflowMemory.record_execution(
-            tool=tool,
-            function=function,
-            arguments=arguments,
-            success=success
+
+        self._update_workflow_memory(
+            event
+        )
+
+        self._update_preference_memory(
+            event
+        )
+
+        self._update_episodic_memory(
+            event
         )
 
     def get_workflow(
@@ -262,12 +290,6 @@ class MemoryManager:
         )
 
         return workflow
-
-    def get_preferences(self) -> dict:
-        """
-        Retrieve stored user preferences.
-        """
-        return AdaptiveMemory.load_preferences()
         
     def prepare_user_text(
         self,
@@ -377,3 +399,34 @@ class MemoryManager:
         return self.enrich_analysis(
             analysis
         )
+    
+    def get_preferences(
+        self
+    ):
+        """
+        Retrieve learned user preferences.
+
+        Planner and other components should never
+        access PreferenceMemory directly.
+        """
+
+        return PreferenceMemory.get_preferences()
+    
+
+    def apply_preferences(
+        self,
+        tool_plan
+    ):
+        """
+        Apply learned user preferences
+        to a ToolPlan.
+
+        Currently this is a passthrough.
+        Future versions may modify:
+        - browser
+        - quality
+        - application
+        - defaults
+        """
+
+        return tool_plan
