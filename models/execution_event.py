@@ -12,6 +12,8 @@ class ExecutionEvent(BaseModel):
 
     success: bool
 
+    experience: str | None = None
+
     user_text: str | None = None
 
     timestamp: datetime = Field(

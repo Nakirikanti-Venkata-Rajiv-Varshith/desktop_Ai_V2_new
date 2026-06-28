@@ -1,24 +1,14 @@
 {
     "episodes": [
         {
-            "tool": "youtube",
-            "function": "search_query",
-            "timestamp": "2026-06-27T20:10:08.311542"
+            "timestamp": "2026-06-28T10:30:15",
+            "category": "browser",
+            "event": "Opened Gmail"
         },
         {
-            "tool": "youtube",
-            "function": "play_first",
-            "timestamp": "2026-06-27T20:10:17.812162"
-        },
-        {
-            "tool": "youtube",
-            "function": "skip_ad",
-            "timestamp": "2026-06-27T20:10:34.266934"
-        },
-        {
-            "tool": "gmail",
-            "function": "compose_email",
-            "timestamp": "2026-06-27T20:10:58.588196"
+            "timestamp": "2026-06-28T10:31:10",
+            "category": "youtube",
+            "event": "Played Imagine Dragons"
         }
     ]
 }

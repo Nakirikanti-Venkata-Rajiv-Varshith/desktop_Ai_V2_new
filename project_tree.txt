@@ -1,14 +1,15 @@
 .
 ├── agent
-│   ├── adaptive_memory.py
 │   ├── behavior_history.py
 │   ├── entity_memory.py
+│   ├── episodic_memory.py
 │   ├── executor.py
 │   ├── intent_memory.py
 │   ├── memory.py
 │   ├── orchestrator.py
 │   ├── parser.py
 │   ├── planner.py
+│   ├── preference_memory.py
 │   ├── queue_builder.py
 │   ├── router.py
 │   ├── turn_analyzer.py
@@ -40,6 +41,7 @@
 │   ├── behavior_history.json
 │   ├── commands.json
 │   ├── entity_memory.json
+│   ├── episodic_memory.json
 │   ├── preferences.json
 │   ├── semantic_memory.json
 │   ├── user_behavior.json
@@ -66,6 +68,7 @@
 ├── memory
 │   └── memory_manager.py
 ├── models
+│   ├── execution_event.py
 │   ├── execution_queue.py
 │   ├── queue_item.py
 │   ├── response_type.py
@@ -132,4 +135,4 @@
     ├── helpers.py
     └── logger.py
 
-28 directories, 105 files
+28 directories, 108 files

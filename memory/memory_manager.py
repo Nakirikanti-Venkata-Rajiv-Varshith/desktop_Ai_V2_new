@@ -10,6 +10,7 @@ from models.task_plan import TaskPlan
 from models.tool_plan import ToolPlan
 from models.execution_event import ExecutionEvent
 from agent.episodic_memory import EpisodicMemory
+from memory.experience_generator import ExperienceGenerator
 """
 Central gateway for all memory interactions.
 
@@ -240,12 +241,13 @@ class MemoryManager:
             tool=tool,
             function=function,
             arguments=arguments,
-            success=success
+            success=success,
+            experience=None
         )
+        event.experience = ExperienceGenerator.generate(event)
+        print(event)
 
-        self._update_workflow_memory(
-            event
-        )
+        self._update_workflow_memory(event)
 
         event_bus.emit(
             "MemoryManager received execution"
