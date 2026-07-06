@@ -13,7 +13,7 @@ WEBSITES_JSON_PATH = os.path.join(DATA_DIR, "websites.json")
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "qwen3:8b"
-
+OLLAMA_EMBEDDING_MODEL = "nomic-embed-text"
 CHROME_COMMAND = "chromium"
 FIREFOX_COMMAND = "firefox"
 TERMINAL_COMMAND = "gnome-terminal"

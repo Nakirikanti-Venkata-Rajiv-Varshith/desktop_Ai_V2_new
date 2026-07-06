@@ -11,6 +11,8 @@ from models.tool_plan import ToolPlan
 from models.execution_event import ExecutionEvent
 from agent.episodic_memory import EpisodicMemory
 from memory.experience_generator import ExperienceGenerator
+from memory.semantic_memory import SemanticMemory
+from memory.semantic_learning import SemanticLearning
 """
 Central gateway for all memory interactions.
 
@@ -42,6 +44,11 @@ class MemoryManager:
 
     MemoryManager only routes already-understood information.
     """
+
+    def __init__(self):
+
+        self.semantic_memory = SemanticMemory()
+
 
     def update_from_turn(
         self,
@@ -216,6 +223,39 @@ class MemoryManager:
             event
         )
 
+    def _update_semantic_memory(
+        self,
+        event: ExecutionEvent
+    ):
+        """
+        Route semantic learning.
+
+        Successful executions that contain
+        reusable semantic information are
+        converted into SemanticDocuments and
+        stored in SemanticMemory.
+        """
+
+        if not SemanticLearning.should_learn(
+            event
+        ):
+            return
+
+        candidate = SemanticLearning.extract_candidate(
+            event
+        )
+
+        if candidate is None:
+            return
+
+        document = SemanticLearning.build_document(
+            candidate
+        )
+
+        self.semantic_memory.add_document(
+            document
+        )
+
     def log_execution(
         self,
         tool: str,
@@ -269,6 +309,10 @@ class MemoryManager:
         )
 
         self._update_episodic_memory(
+            event
+        )
+
+        self._update_semantic_memory(
             event
         )
 
@@ -432,3 +476,16 @@ class MemoryManager:
         """
 
         return tool_plan
+    
+    def semantic_search(
+        self,
+        query: str
+    ):
+        """
+        Search semantic memory for the
+        document most relevant to the query.
+        """
+
+        return self.semantic_memory.semantic_search(
+            query
+        )

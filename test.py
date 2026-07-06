@@ -1,19 +1,36 @@
-from conversation.conversation_manager import ConversationManager
+from memory.semantic_learning import SemanticLearning
+from memory.semantic_memory import SemanticMemory
+from models.execution_event import ExecutionEvent
 
-manager = ConversationManager()
+# Start clean
+SemanticMemory.clear()
 
-manager.add_user_message(
-    "Open Gmail"
+event = ExecutionEvent(
+    tool="browser",
+    function="open_url",
+    arguments={
+        "url": "https://github.com/balaya/project"
+    },
+    success=True,
+    experience=None
 )
 
-manager.add_assistant_message(
-    "Opened Gmail"
+candidate = SemanticLearning.extract_candidate(
+    event
 )
 
-manager.add_user_message(
-    "Compose email"
+document = SemanticLearning.build_document(
+    candidate
 )
+
+SemanticMemory.add_document(
+    document
+)
+
+print("Stored successfully")
+
+print()
 
 print(
-    manager.build_recent_context()
+    SemanticMemory.all_documents()
 )

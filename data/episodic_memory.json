@@ -39,6 +39,61 @@
             "timestamp": "2026-06-28T14:10:47.743644",
             "category": "gmail",
             "event": "gmail.compose_email (recipient=john@gmail.com)"
+        },
+        {
+            "timestamp": "2026-06-28T20:44:27.713830",
+            "category": "youtube",
+            "event": "youtube.search_query (query=imagine dragons)"
+        },
+        {
+            "timestamp": "2026-06-28T21:47:39.226446",
+            "category": "gmail",
+            "event": "gmail.compose_email (recipient=john@gmail.com)"
+        },
+        {
+            "timestamp": "2026-06-28T22:04:43.176752",
+            "category": "gmail",
+            "event": "gmail.compose_email (recipient=john@gmail.com)"
+        },
+        {
+            "timestamp": "2026-06-28T22:16:45.925654",
+            "category": "gmail",
+            "event": "gmail.compose_email (recipient=john@gmail.com)"
+        },
+        {
+            "timestamp": "2026-06-30T09:00:25.484254",
+            "category": "browser",
+            "event": "browser.open_url (url=https://youtube.com)"
+        },
+        {
+            "timestamp": "2026-06-30T09:00:38.875124",
+            "category": "youtube",
+            "event": "youtube.search_query (query=justin beiber songs)"
+        },
+        {
+            "timestamp": "2026-06-30T09:00:47.314263",
+            "category": "youtube",
+            "event": "youtube.play_first"
+        },
+        {
+            "timestamp": "2026-06-30T09:00:54.793101",
+            "category": "youtube",
+            "event": "youtube.skip_ad"
+        },
+        {
+            "timestamp": "2026-06-30T09:02:36.325619",
+            "category": "youtube",
+            "event": "youtube.search_query (query=justin biber songs)"
+        },
+        {
+            "timestamp": "2026-06-30T09:03:02.129433",
+            "category": "gmail",
+            "event": "gmail.compose_email (recipient=john@gmail.com)"
+        },
+        {
+            "timestamp": "2026-07-06T14:42:28.359226",
+            "category": "browser",
+            "event": "browser.open_url (url=https://youtube.com)"
         }
     ]
 }

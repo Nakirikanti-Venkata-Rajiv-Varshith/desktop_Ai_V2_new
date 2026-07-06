@@ -809,6 +809,112 @@
             },
             "success": true,
             "user_text": null
+        },
+        {
+            "timestamp": "2026-06-28T20:44:27.714892",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "imagine dragons"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-28T21:47:39.226752",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-28T22:04:43.180936",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-28T22:16:45.926305",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-30T09:00:25.485364",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-30T09:00:38.875879",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "justin beiber songs"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-30T09:00:47.314847",
+            "tool": "youtube",
+            "function": "play_first",
+            "arguments": {},
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-30T09:00:54.793903",
+            "tool": "youtube",
+            "function": "skip_ad",
+            "arguments": {},
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-30T09:02:36.325924",
+            "tool": "youtube",
+            "function": "search_query",
+            "arguments": {
+                "query": "justin biber songs"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-06-30T09:03:02.131828",
+            "tool": "gmail",
+            "function": "compose_email",
+            "arguments": {
+                "recipient": "john@gmail.com"
+            },
+            "success": true,
+            "user_text": null
+        },
+        {
+            "timestamp": "2026-07-06T14:42:28.360096",
+            "tool": "browser",
+            "function": "open_url",
+            "arguments": {
+                "url": "https://youtube.com"
+            },
+            "success": true,
+            "user_text": null
         }
     ]
 }

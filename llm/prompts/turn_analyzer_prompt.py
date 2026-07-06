@@ -193,6 +193,24 @@ Do not set tool_call to null simply because some optional or missing arguments a
 
 Leave unknown arguments out of the arguments dictionary.
 
+If the user provides an HTTP or HTTPS URL,
+always select the browser tool.
+
+Example
+
+User:
+Open https://github.com/openai
+
+Output
+
+{{ 
+  "tool":"browser",
+  "function":"open_url",
+  "arguments":{{ 
+      "url":"https://github.com/openai"
+  }}
+}}
+
 ==================================================
 JOB 2 : FACT EXTRACTION
 ==================================================

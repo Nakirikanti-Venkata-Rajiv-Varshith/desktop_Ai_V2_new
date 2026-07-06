@@ -1,0 +1,146 @@
+.
+├── agent
+│   ├── behavior_history.py
+│   ├── entity_memory.py
+│   ├── episodic_memory.py
+│   ├── executor.py
+│   ├── intent_memory.py
+│   ├── memory.py
+│   ├── orchestrator.py
+│   ├── parser.py
+│   ├── planner.py
+│   ├── preference_memory.py
+│   ├── queue_builder.py
+│   ├── router.py
+│   ├── turn_analyzer.py
+│   └── workflow_memory.py
+├── api
+│   ├── main.py
+│   ├── models
+│   │   ├── execute_request.py
+│   │   └── execute_response.py
+│   └── routes
+│       ├── chat.py
+│       ├── execute.py
+│       ├── gmail.py
+│       ├── stream.py
+│       └── stream_request.py
+├── app.py
+├── browser
+│   ├── bootstrap.py
+│   ├── cdp_client.py
+│   ├── chromium.py
+│   └── focus.py
+├── config
+│   ├── constants.py
+│   ├── paths.py
+│   └── settings.py
+├── conversation
+│   ├── conversation_context.py
+│   ├── conversation_history.py
+│   ├── conversation_manager.py
+│   ├── conversation_session.py
+│   └── conversation_turn.py
+├── core
+│   └── agent_service.py
+├── data
+│   ├── behavior_history.json
+│   ├── commands.json
+│   ├── entity_memory.json
+│   ├── episodic_memory.json
+│   ├── preferences.json
+│   ├── semantic_memory.json
+│   ├── user_behavior.json
+│   └── websites.json
+├── llm
+│   ├── builders
+│   │   └── prompt_builder.py
+│   ├── chat_client.py
+│   ├── instructor_client.py
+│   ├── ollama_client.py
+│   └── prompts
+│       ├── base_prompt.py
+│       ├── browser_prompt.py
+│       ├── chat_prompt.py
+│       ├── file_prompt.py
+│       ├── gmail_prompt.py
+│       ├── router_prompt.py
+│       ├── system_prompt.py
+│       ├── turn_analyzer_prompt.py
+│       └── youtube_prompt.py
+├── logs
+│   ├── agent.log
+│   └── gmail_summary.log
+├── memory
+│   ├── experience_generator.py
+│   └── memory_manager.py
+├── models
+│   ├── execution_event.py
+│   ├── execution_queue.py
+│   ├── queue_item.py
+│   ├── response_type.py
+│   ├── schemas.py
+│   ├── task_plan.py
+│   ├── tool_plan.py
+│   ├── tool_request.py
+│   ├── tool_response.py
+│   └── turn_analysis.py
+├── no_llm_needed
+│   ├── command_matcher.py
+│   └── predefined_commands.json
+├── test.py
+├── tests
+│   ├── test_browser.py
+│   ├── test_gmail.py
+│   ├── test_system.py
+│   └── test_youtube.py
+├── tools
+│   ├── app
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── browser
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── chat
+│   │   └── tool.py
+│   ├── file
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── gmail
+│   │   ├── gmail_basic_tool.py
+│   │   ├── gmail_summary_tool.py
+│   │   ├── metadata.py
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── gui
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   ├── logger.py
+│   ├── registered_tools_metadata.py
+│   ├── registry.py
+│   ├── system
+│   │   ├── prompt.py
+│   │   └── tool.py
+│   └── youtube
+│       ├── metadata.py
+│       ├── prompt.py
+│       └── tool.py
+├── ui
+│   ├── command_splitter.py
+│   ├── event_worker.py
+│   ├── main_window.py
+│   ├── prompt_bar.py
+│   ├── prompt_window_looks.py
+│   ├── queue_execution_worker.py
+│   ├── queue_item_widget.py
+│   ├── queue_panel.py
+│   ├── styles.py
+│   └── worker.py
+└── utils
+    ├── event_bus.py
+    ├── file_utils.py
+    ├── global_events.py
+    ├── helpers.py
+    └── logger.py
+
+29 directories, 115 files

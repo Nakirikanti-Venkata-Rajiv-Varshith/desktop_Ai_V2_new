@@ -40,6 +40,46 @@ class ToolCall(BaseModel):
     )
 
 
+class PreferenceUpdate(BaseModel):
+
+    category: str
+
+    value: str
+
+    confidence: float = 1.0
+
+class Clarification(BaseModel):
+
+    needed: bool = False
+
+    question: str | None = None
+
+class ConversationState(BaseModel):
+
+    topic: str | None = None
+
+    follow_up: bool = False
+
+    references_previous_turn: bool = False
+
+class SafetyAssessment(BaseModel):
+
+    safe: bool = True
+
+    reason: str | None = None
+
+class WorkflowHint(BaseModel):
+
+    reusable: bool = False
+
+    workflow_name: str | None = None
+
+class Context(BaseModel):
+
+    resolved_entities: list[str] = Field(default_factory=list)
+
+    resolved_references: list[str] = Field(default_factory=list)
+
 class TurnAnalysis(BaseModel):
     """
     Complete understanding of a single user message.
@@ -49,12 +89,21 @@ class TurnAnalysis(BaseModel):
 
     confidence: float = 1.0
 
-    requires_clarification: bool = False
-
-    clarification_question: str | None = None
-
     tool_call: ToolCall | None = None
 
     facts: list[Fact] = Field(
-        default_factory=list
-    )
+        default_factory=list)
+
+    preference_updates: list[PreferenceUpdate] = Field(default_factory=list)
+
+    clarification: Clarification = Field(default_factory=Clarification)
+
+    conversation_state: ConversationState = Field(default_factory=ConversationState)
+
+    safety: SafetyAssessment = Field(default_factory=SafetyAssessment)
+
+    workflow_hint: WorkflowHint = Field(default_factory=WorkflowHint)
+
+    context: Context = Field(default_factory=Context)
+    
+    confidence: float = 1.0
