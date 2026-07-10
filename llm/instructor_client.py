@@ -6,6 +6,10 @@ from config.settings import OLLAMA_MODEL
 from models.tool_request import ToolRequest
 from models.turn_analysis import TurnAnalysis
 
+from llm.instructor_finance import InstructorFinance
+from models.accounting.bank_statement_request import (
+    BankStatementRequest
+)
 
 class InstructorClient:
 
@@ -19,17 +23,33 @@ class InstructorClient:
             mode=Mode.JSON
         )
 
-    def generate_tool_request(
+        self.finance = InstructorFinance(
+            self.client
+        )
+
+    def _generate(
         self,
-        prompt: str
-    ) -> ToolRequest:
+        *,
+        prompt: str,
+        response_model,
+        title: str
+    ):
+        """
+        Shared Instructor generation helper.
+
+        Handles:
+        - Instructor call
+        - Logging
+        - Error reporting
+        """
 
         try:
 
             response = self.client.chat.completions.create(
+
                 model=OLLAMA_MODEL,
 
-                response_model=ToolRequest,
+                response_model=response_model,
 
                 messages=[
                     {
@@ -41,7 +61,7 @@ class InstructorClient:
 
             print("\n")
             print("=" * 80)
-            print("INSTRUCTOR RESPONSE")
+            print(title)
             print("=" * 80)
             print(response)
             print("=" * 80)
@@ -53,53 +73,41 @@ class InstructorClient:
 
             print("\n")
             print("=" * 80)
-            print("INSTRUCTOR ERROR")
+            print(f"{title} ERROR")
             print("=" * 80)
             print(e)
             print("=" * 80)
             print("\n")
 
             raise
+
+    def generate_tool_request(
+        self,
+        prompt: str
+    ) -> ToolRequest:
+
+        return self._generate(
+            prompt=prompt,
+            response_model=ToolRequest,
+            title="INSTRUCTOR RESPONSE"
+        )
 
     def generate_turn_analysis(
         self,
         prompt: str
     ) -> TurnAnalysis:
 
-        try:
+        return self._generate(
+            prompt=prompt,
+            response_model=TurnAnalysis,
+            title="TURN ANALYSIS"
+        )
 
-            response = self.client.chat.completions.create(
+    def generate_bank_statement_general(
+        self,
+        request: BankStatementRequest
+    ):
 
-                model=OLLAMA_MODEL,
-
-                response_model=TurnAnalysis,
-
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            )
-
-            print("\n")
-            print("=" * 80)
-            print("TURN ANALYSIS")
-            print("=" * 80)
-            print(response)
-            print("=" * 80)
-            print("\n")
-
-            return response
-
-        except Exception as e:
-
-            print("\n")
-            print("=" * 80)
-            print("TURN ANALYSIS ERROR")
-            print("=" * 80)
-            print(e)
-            print("=" * 80)
-            print("\n")
-
-            raise
+        return self.finance.generate_bank_statement_general(
+            request
+        )

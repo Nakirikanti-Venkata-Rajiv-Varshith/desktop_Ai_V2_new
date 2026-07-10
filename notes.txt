@@ -60,7 +60,8 @@ find . -type f ! -path '*/.*' ! -path '*/__pycache__/*' \( -name "*.py" -o -name
 8.b if u dont want to copy empty files:-
 find . -type f ! -path '*/.*' ! -path '*/__pycache__/*' \( -name "*.py" -o -name "*.txt" -o -name "*.json" \) ! -name "__init__.py" -size +0c -exec cp --update=none {} ../files/ \;
 
-
+8.c if you dont want to copy empty along with pycache;json;logs
+find . -type f ! -path '*/.*' ! -path '*/__pycache__/*' \( -name "*.py" -o -name "*.txt" \) ! -name "__init__.py" -size +0c -exec cp --update=none {} ../files/ \;
 
 
 9. Code to open agent chromium for manual tests:

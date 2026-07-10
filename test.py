@@ -1,23 +1,24 @@
-import sqlite3
-
-connection = sqlite3.connect(
-    "data/semantic.db"
+from finance.accounting_tools.bank_statement_parser import (
+    BankStatementParser
 )
 
-cursor = connection.cursor()
 
-cursor.execute(
-    """
-    SELECT
-        id,
-        typeof(embedding),
-        length(embedding)
-    FROM documents
-    """
-)
+def main():
 
-for row in cursor.fetchall():
+    parser = BankStatementParser()
 
-    print(row)
+    statements = parser.run()
 
-connection.close()
+    print(f"\nParsed {len(statements)} statement(s).\n")
+
+    for statement in statements:
+
+        print(statement.metadata)
+
+        print(f"Transactions: {len(statement.transactions)}")
+
+        print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()
