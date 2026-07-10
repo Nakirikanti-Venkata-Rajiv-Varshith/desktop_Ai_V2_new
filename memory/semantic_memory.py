@@ -4,6 +4,8 @@ import math
 from config.settings import DATA_DIR
 from models.semantic_document import SemanticDocument
 from llm.embedding_client import EmbeddingClient
+import sqlite3
+import numpy as np
 
 class SemanticMemory:
     """
@@ -16,105 +18,337 @@ class SemanticMemory:
     """
 
     _embedding_client = EmbeddingClient()
-    MEMORY_FILE = (
+
+    DATABASE_PATH = (
         Path(DATA_DIR)
-        / "semantic_memory.json"
+        / "semantic.db"
     )
 
     @classmethod
-    def load_memory(cls):
-
-        if not cls.MEMORY_FILE.exists():
-            return {
-                "documents": []
-            }
-
-        try:
-
-            with open(
-                cls.MEMORY_FILE,
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                return json.load(f)
-
-        except Exception:
-
-            return {
-                "documents": []
-            }
-
-    @classmethod
-    def save_memory(
-        cls,
-        memory: dict
+    def _connect(
+        cls
     ):
+        """
+        Return a SQLite connection.
+        """
 
-        cls.MEMORY_FILE.parent.mkdir(
+        cls.DATABASE_PATH.parent.mkdir(
             parents=True,
             exist_ok=True
         )
 
-        with open(
-            cls.MEMORY_FILE,
-            "w",
-            encoding="utf-8"
-        ) as f:
+        return sqlite3.connect(
+            cls.DATABASE_PATH
+        )
+    
+    @classmethod
+    def _serialize_embedding(
+        cls,
+        embedding: list[float]
+    ) -> bytes:
+        """
+        Convert an embedding into
+        SQLite BLOB bytes.
+        """
 
-            json.dump(
-                memory,
-                f,
-                indent=4
+        return np.asarray(
+            embedding,
+            dtype=np.float32
+        ).tobytes()
+
+
+    @classmethod
+    def _deserialize_embedding(
+        cls,
+        blob: bytes
+    ) -> list[float]:
+        """
+        Convert SQLite BLOB back into
+        a Python list.
+        """
+
+        if not blob:
+            return []
+
+        return np.frombuffer(
+            blob,
+            dtype=np.float32
+        ).tolist()
+    
+    @classmethod
+    def initialize_database(
+        cls
+    ):
+        """
+        Create semantic database if it
+        does not already exist.
+        """
+
+        connection = cls._connect()
+
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS documents (
+
+                id TEXT PRIMARY KEY,
+
+                text TEXT NOT NULL,
+
+                embedding BLOB,
+
+                metadata TEXT
+
             )
+            """
+        )
 
+        cursor.execute(
+            """
+            CREATE INDEX IF NOT EXISTS
+            idx_documents_text
+
+            ON documents(text)
+            """
+        )
+        connection.commit()
+
+        connection.close()
+                
     @classmethod
     def add_document(
         cls,
         document: SemanticDocument
     ):
 
-        memory = cls.load_memory()
-
-        memory.setdefault(
-            "documents",
-            []
-        )
-
+        #
+        # SQLite
+        #
         if not document.embedding:
 
-            document.embedding = cls._embedding_client.embed(
-                document.text
+                document.embedding = cls._embedding_client.embed(
+                    document.text
+                )
+
+        cls.initialize_database()
+
+        connection = cls._connect()
+
+        try:
+
+            cursor = connection.cursor()
+
+            cursor.execute(
+                """
+                INSERT OR REPLACE INTO documents
+                (
+                    id,
+                    text,
+                    embedding,
+                    metadata
+                )
+                VALUES
+                (
+                    ?, ?, ?, ?
+                )
+                """,
+                (
+                    document.id,
+                    document.text,
+                    cls._serialize_embedding(
+                        document.embedding
+                    ),
+                    json.dumps(
+                        document.metadata
+                    )
+                )
             )
 
-        memory["documents"].append(
-            document.model_dump()
-        )
+            connection.commit()
+            
+        finally:
 
-        cls.save_memory(
-            memory
-        )
+            connection.close()
 
     @classmethod
-    def all_documents(cls):
+    def all_documents(
+        cls
+    ) -> list[SemanticDocument]:
+        """
+        Return every stored semantic document.
 
-        memory = cls.load_memory()
+        SQLite is now the source of truth.
+        """
 
-        return [
-            SemanticDocument(**document)
-            for document in memory.get(
-                "documents",
-                []
+        cls.initialize_database()
+
+        connection = cls._connect()
+
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                id,
+                text,
+                embedding,
+                metadata
+            FROM documents
+            """
+        )
+
+        rows = cursor.fetchall()
+
+        connection.close()
+
+        documents = []
+
+        for row in rows:
+
+            documents.append(
+
+                SemanticDocument(
+
+                    id=row[0],
+
+                    text=row[1],
+
+                    embedding=cls._deserialize_embedding(
+                        row[2]
+                    ),
+                    metadata=json.loads(
+                        row[3]
+                    ) if row[3] else {}
+
+                )
+
             )
-        ]
+
+        return documents
 
     @classmethod
     def clear(cls):
 
-        cls.save_memory(
-            {
-                "documents": []
-            }
+        #
+        # SQLite
+        #
+
+        cls.initialize_database()
+
+        connection = cls._connect()
+
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            DELETE FROM documents
+            """
+        )
+
+        connection.commit()
+
+        connection.close()
+
+    @classmethod
+    def verify_database(
+        cls
+    ) -> bool:
+        """
+        Verify SQLite integrity.
+        """
+
+        cls.initialize_database()
+
+        connection = cls._connect()
+
+        try:
+
+            cursor = connection.cursor()
+
+            cursor.execute(
+                "PRAGMA integrity_check"
+            )
+
+            result = cursor.fetchone()
+
+            return (
+                result[0] == "ok"
+            )
+
+        finally:
+
+            connection.close()
+
+    @classmethod
+    def statistics(
+        cls
+    ):
+        """
+        Return semantic memory statistics.
+        """
+
+        documents = cls.all_documents()
+
+        return {
+
+            "documents": len(
+                documents
+            ),
+
+            "database": str(
+                cls.DATABASE_PATH
+            )
+
+        }
+
+    @classmethod
+    def delete_document(
+        cls,
+        document_id: str
+    ):
+        """
+        Delete one semantic document.
+        """
+
+        cls.initialize_database()
+
+        connection = cls._connect()
+
+        try:
+
+            cursor = connection.cursor()
+
+            cursor.execute(
+                """
+                DELETE FROM documents
+                WHERE id = ?
+                """,
+                (
+                    document_id,
+                )
+            )
+
+            connection.commit()
+
+        finally:
+
+            connection.close()
+
+
+    @classmethod
+    def update_document(
+        cls,
+        document: SemanticDocument
+    ):
+        """
+        Update an existing document.
+
+        Internally uses add_document().
+        """
+
+        cls.add_document(
+            document
         )
 
     @classmethod

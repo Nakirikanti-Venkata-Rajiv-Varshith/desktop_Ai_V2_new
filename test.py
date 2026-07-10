@@ -1,36 +1,23 @@
-from memory.semantic_learning import SemanticLearning
-from memory.semantic_memory import SemanticMemory
-from models.execution_event import ExecutionEvent
+import sqlite3
 
-# Start clean
-SemanticMemory.clear()
-
-event = ExecutionEvent(
-    tool="browser",
-    function="open_url",
-    arguments={
-        "url": "https://github.com/balaya/project"
-    },
-    success=True,
-    experience=None
+connection = sqlite3.connect(
+    "data/semantic.db"
 )
 
-candidate = SemanticLearning.extract_candidate(
-    event
+cursor = connection.cursor()
+
+cursor.execute(
+    """
+    SELECT
+        id,
+        typeof(embedding),
+        length(embedding)
+    FROM documents
+    """
 )
 
-document = SemanticLearning.build_document(
-    candidate
-)
+for row in cursor.fetchall():
 
-SemanticMemory.add_document(
-    document
-)
+    print(row)
 
-print("Stored successfully")
-
-print()
-
-print(
-    SemanticMemory.all_documents()
-)
+connection.close()

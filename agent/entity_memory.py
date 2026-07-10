@@ -6,6 +6,38 @@ from config.settings import DATA_DIR
 
 class EntityMemory:
 
+    @classmethod
+    def _normalize_entity(
+        cls,
+        entity: str
+    ) -> str:
+        """
+        Normalize an entity name before
+        storing or retrieving it.
+        """
+
+        return (
+            entity
+            .strip()
+            .lower()
+        )
+
+
+    @classmethod
+    def _normalize_attribute(
+        cls,
+        attribute: str
+    ) -> str:
+        """
+        Normalize an attribute name.
+        """
+
+        return (
+            attribute
+            .strip()
+            .lower()
+        )
+
     MEMORY_FILE = (
         Path(DATA_DIR)
         / "entity_memory.json"
@@ -73,7 +105,13 @@ class EntityMemory:
             {}
         )
 
-        entity = entity.lower()
+        entity = cls._normalize_entity(
+            entity
+        )
+
+        attribute = cls._normalize_attribute(
+            attribute
+        )
 
         memory["entities"].setdefault(
             entity,
@@ -106,7 +144,9 @@ class EntityMemory:
                 {}
             )
             .get(
-                entity.lower()
+                cls._normalize_entity(
+                    entity
+                )
             )
         )
 
@@ -117,7 +157,9 @@ class EntityMemory:
             return entity_data
 
         return entity_data.get(
-            attribute
+            cls._normalize_attribute(
+                attribute
+            )
         )
 
     @classmethod
@@ -129,7 +171,9 @@ class EntityMemory:
         memory = cls.load_memory()
 
         return (
-            entity.lower()
+            cls._normalize_entity(
+                entity
+            )
             in memory.get(
                 "entities",
                 {}
@@ -159,13 +203,15 @@ class EntityMemory:
             "entities",
             {}
         )
+        entity = cls._normalize_entity(
+            entity
+        )
 
-        if entity.lower() in entities:
+        if entity in entities:
 
             del entities[
-                entity.lower()
+                entity
             ]
-
             cls.save_memory(
                 memory
             )

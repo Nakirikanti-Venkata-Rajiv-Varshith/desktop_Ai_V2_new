@@ -90,16 +90,162 @@ class EpisodicMemory:
             )
 
     @classmethod
+    def _compress_browser(
+        cls,
+        function: str,
+        arguments: dict
+    ):
+        """
+        Compress browser events.
+        """
+
+        if function == "open_url":
+
+            url = arguments.get(
+                "url",
+                ""
+            )
+
+            target = (
+                url
+                .replace("https://", "")
+                .replace("http://", "")
+                .rstrip("/")
+            )
+
+            return {
+                "type": "browser_open",
+                "target": target
+            }
+
+        return None
+
+    @classmethod
+    def _compress_youtube(
+        cls,
+        function: str,
+        arguments: dict
+    ):
+        """
+        Compress YouTube events.
+        """
+
+        if function == "search_query":
+
+            return {
+                "type": "youtube_search",
+                "query": arguments.get(
+                    "query"
+                )
+            }
+
+        if function == "play_first":
+
+            return {
+                "type": "youtube_play"
+            }
+
+        if function == "skip_ad":
+
+            return {
+                "type": "youtube_skip_ad"
+            }
+
+        return None
+    
+    @classmethod
+    def _compress_gmail(
+        cls,
+        function: str,
+        arguments: dict
+    ):
+        """
+        Compress Gmail events.
+        """
+
+        if function == "compose_email":
+
+            return {
+                "type": "gmail_compose",
+                "recipient": arguments.get(
+                    "recipient"
+                )
+            }
+
+        return None
+    
+    @classmethod
+    def _compress_event(
+        cls,
+        event: ExecutionEvent
+    ):
+        """
+        Convert an execution into a compact
+        episodic representation.
+
+        This method contains only compression
+        logic and performs no file operations.
+        """
+        tool = event.tool
+
+        function = event.function
+
+        arguments = event.arguments or {}
+
+        if tool == "browser":
+
+            compressed = cls._compress_browser(
+                function,
+                arguments
+            )
+
+            if compressed:
+                return compressed
+
+        if tool == "youtube":
+
+            compressed = cls._compress_youtube(
+                function,
+                arguments
+            )
+
+            if compressed:
+                return compressed
+
+        if tool == "gmail":
+
+            compressed = cls._compress_gmail(
+                function,
+                arguments
+            )
+
+            if compressed:
+                return compressed
+
+        return {
+            "type": f"{tool}_{function}"
+        }
+
+    @classmethod
     def _build_episode(
         cls,
         event: ExecutionEvent
     ):
 
-        return {
-            "timestamp": event.timestamp.isoformat(),
-            "category": event.tool,
-            "event": event.experience
-        }
+        compressed = cls._compress_event(
+            event
+        )
+
+        compressed["timestamp"] = (
+            event.timestamp.isoformat()
+        )
+
+        return compressed
+        # return {
+        #     "timestamp": event.timestamp.isoformat(),
+        #     "category": event.tool,
+        #     "event": event.experience
+        # }
     
     @classmethod
     def record_execution(
@@ -319,11 +465,10 @@ class EpisodicMemory:
         keyword: str
     ):
         """
-        Search episodic memory using a keyword.
+        Search episodic memory.
 
-        The search is case-insensitive and
-        checks both the category and event
-        fields.
+        Supports both the legacy episode format
+        and the compact format.
         """
 
         episodes = cls._get_episodes()
@@ -334,22 +479,54 @@ class EpisodicMemory:
 
         for episode in episodes:
 
-            category = episode.get(
-                "category",
-                ""
-            ).lower()
+            #
+            # Legacy format
+            #
 
-            event = episode.get(
-                "event",
-                ""
-            ).lower()
+            if "category" in episode:
 
-            if (
-                keyword in category
-                or
-                keyword in event
+                category = episode.get(
+                    "category",
+                    ""
+                ).lower()
+
+                event = episode.get(
+                    "event",
+                    ""
+                ).lower()
+
+                if (
+                    keyword in category
+                    or
+                    keyword in event
+                ):
+
+                    results.append(
+                        episode
+                    )
+
+                continue
+
+            #
+            # Compact format
+            #
+
+            values = []
+
+            for value in episode.values():
+
+                if isinstance(
+                    value,
+                    str
+                ):
+                    values.append(
+                        value.lower()
+                    )
+
+            if any(
+                keyword in value
+                for value in values
             ):
-
                 results.append(
                     episode
                 )

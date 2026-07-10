@@ -12,3 +12,4 @@ instructor
 openai
 sse-starlette
 python-dateutil
+numpy

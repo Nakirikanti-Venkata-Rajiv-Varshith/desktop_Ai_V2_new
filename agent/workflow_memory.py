@@ -1,7 +1,67 @@
-from agent.behavior_history import BehaviorHistory
+import json
+
+from pathlib import Path
+
+from config.settings import DATA_DIR
+
 from models.execution_event import ExecutionEvent
+from agent.behavior_history import BehaviorHistory
 
 class WorkflowMemory:
+
+    MEMORY_FILE = (
+        Path(DATA_DIR)
+        / "workflow_memory.json"
+    )
+
+    @classmethod
+    def load_memory(
+        cls
+    ):
+
+        if not cls.MEMORY_FILE.exists():
+            return {
+                "workflows": {}
+            }
+
+        try:
+
+            with open(
+                cls.MEMORY_FILE,
+                "r",
+                encoding="utf-8"
+            ) as f:
+
+                return json.load(f)
+
+        except Exception:
+
+            return {
+                "workflows": {}
+            }
+        
+    @classmethod
+    def save_memory(
+        cls,
+        memory: dict
+    ):
+
+        cls.MEMORY_FILE.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        with open(
+            cls.MEMORY_FILE,
+            "w",
+            encoding="utf-8"
+        ) as f:
+
+            json.dump(
+                memory,
+                f,
+                indent=4
+            )
 
     @classmethod
     def learn_workflows(cls):
